@@ -20,12 +20,10 @@ namespace Server.Controllers
     {
         private readonly ApplicationContext _context;
         private IUserService _userService;
-        private IMapper _mapper;
 
-        public UsersController(ApplicationContext context,IMapper mapper,IUserService userService )
+        public UsersController(ApplicationContext context,IUserService userService )
         {
             _context = context;
-            _mapper = mapper;
             _userService = userService;
         }
 
@@ -91,20 +89,31 @@ namespace Server.Controllers
         {
             // var user = await _context.Users.FindAsync(id);
 
-            var user = _context.Users.Where(e => e.User_Name == user_name && e.Password == "1234");
+           
+            var user = _context.Users.Where(e => e.User_Name == user_name && e.Password == "susu123456");
 
-            IDictionary<string, string> result = new Dictionary<string, string>();
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
-
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();           
             if (user.Count() > 0)
             {
-                result["status"] = "200";
-                result["message"] = "Success";
+                retdata.status = "OK";
+                returnstatus.Add(retdata);
+                returndata = _userService.getData(user_name, "1234");
+                result["status"] =returnstatus ;
+                result["menu"] = returndata;
+                //result["message"] = "Success";
             }
             else
             {
-                result["status"] = "404";
-                result["message"] = "Failed";
+                retdata.status = "Failed";
+                returnstatus.Add(retdata);
+                result["status"] = returnstatus;
+                //result["message"] = "Failed";
+                result["menu"] = returndata;
+           
             }
             return JsonConvert.SerializeObject(result);
 

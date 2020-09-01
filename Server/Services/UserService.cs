@@ -11,6 +11,7 @@ namespace Server.Services
     {
         //User GetById(int id);
         User Create(string username,string password,int role_id);
+        List<object> getData(string username, string password);
         //void Update(User user, string password = null);
         // void Delete(int id);
     }
@@ -42,7 +43,39 @@ namespace Server.Services
 
 
         }
-       
+        public List<object> getData(string username,string password)
+        {
+            List<object> objlist = new List<object>();
+            var query = _context.Users.Where(x=>x.User_Name==username)
+            .Join(
+            _context.MenuRole,
+            user => user.Role_ID,
+            menurole => menurole.Role.Id,
+            (user, menurole) => new
+            {
+                MenuID = menurole.Menu_Id
+            }
+            ).Join(
+                _context.Menu,
+                menurole => menurole.MenuID,
+                menu => menu.Id,
+                (menurole, menu) => new
+                {
+                    MenuID = menu.Id,
+                    MenuName = menu.Menu_Name,
+                    ParentID = menu.Parent_Id,
+                    Des=menu.Description
+                }
+                ).ToList();
+            objlist = query.ToList<object>();           
+            //foreach (var invoice in query)
+            //{
+                
+            //    Console.WriteLine("InvoiceID: {0}, Customer Name: {1} " + "Date: {2} ",
+            //        invoice.MenuID, invoice.MenuName, invoice.ParentID,invoice.Des);
+            //}
+            return objlist;
+        }
     }
 
 }

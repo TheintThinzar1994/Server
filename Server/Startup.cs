@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Server.Model;
+using Server.Services;
 
 namespace Server
 {
@@ -29,10 +30,13 @@ namespace Server
         {
             services.AddAuthorization();
             services.AddControllers();
+           
+         
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseNpgsql("Host=127.0.0.1;Port=5432;User Id=postgres;Password=test123;Database=ThankCards");
             });
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
