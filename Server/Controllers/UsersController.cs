@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Server.Model;
+using Server.Services;
 
 namespace Server.Controllers
 {
@@ -15,10 +19,14 @@ namespace Server.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ApplicationContext _context;
+        private IUserService _userService;
+        private IMapper _mapper;
 
-        public UsersController(ApplicationContext context)
+        public UsersController(ApplicationContext context,IMapper mapper,IUserService userService )
         {
             _context = context;
+            _mapper = mapper;
+            _userService = userService;
         }
 
         // GET: api/Users
@@ -100,6 +108,25 @@ namespace Server.Controllers
             }
             return JsonConvert.SerializeObject(result);
 
+        }
+        
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("register")]
+        public IActionResult Register(User user)
+        {
+            //try
+            //{
+            //    // create user
+            //    //_userService.Create();
+            //    return Ok();
+            //}
+            //catch (AppException ex)
+            //{
+            //    // return error message if there was an exception
+                
+            //}
+            return BadRequest();
         }
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
