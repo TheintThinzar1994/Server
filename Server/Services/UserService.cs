@@ -64,7 +64,8 @@ namespace Server.Services
                     MenuID = menu.Id,
                     MenuName = menu.Menu_Name,
                     ParentID = menu.Parent_Id,
-                    Des=menu.Description
+                    Des=menu.Description,
+                    Action=menu.Action
                 }
                 ).ToList();
             objlist = query.ToList<object>();           
