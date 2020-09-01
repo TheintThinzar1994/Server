@@ -7,6 +7,7 @@ namespace Server.Model
 {
     public class ReturnData
     {
+        public string statuscode { get; set; }
         public string status { get; set; }
     }
 }
