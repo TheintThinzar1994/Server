@@ -85,12 +85,12 @@ namespace Server.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("Check")]
-        public string CheckUser(string user_name)
+        public string CheckUser(string user_name,string password)
         {
             // var user = await _context.Users.FindAsync(id);
 
            
-            var user = _context.Users.Where(e => e.User_Name == user_name && e.Password == "susu123456");
+            var user = _context.Users.Where(e => e.User_Name == user_name && e.Password == password);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -99,7 +99,8 @@ namespace Server.Controllers
             ReturnData retdata = new ReturnData();           
             if (user.Count() > 0)
             {
-                retdata.status = "OK";
+                retdata.statuscode = "200";
+                retdata.status = "Success";
                 returnstatus.Add(retdata);
                 returndata = _userService.getData(user_name, "1234");
                 result["status"] =returnstatus ;
@@ -108,7 +109,8 @@ namespace Server.Controllers
             }
             else
             {
-                retdata.status = "Failed";
+                retdata.statuscode = "401";
+                retdata.status = "Unauthorized";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
                 //result["message"] = "Failed";
