@@ -115,8 +115,7 @@ namespace Server.Controllers
                 result["menu"] = returndata;
            
             }
-            return JsonConvert.SerializeObject(result);
-
+            return JsonConvert.SerializeObject(result); 
         }
         
         [AllowAnonymous]
