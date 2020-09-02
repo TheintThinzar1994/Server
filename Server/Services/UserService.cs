@@ -1,9 +1,11 @@
-﻿using Server.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.Helpers;
 using Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Server.Services
@@ -14,7 +16,10 @@ namespace Server.Services
         User Create(string username,string password,int role_id);
         Role CreateRole(Role roledata);
         List<object> getData(string username, string password);
-        Role UpdateRole(int roleid);
+        Role UpdateRole(Role roledata);
+        Boolean DeleteRole(Role roledata);
+
+        List<Role> getRole(string roleid);
         //void Update(User user, string password = null);
         // void Delete(int id);
     }
@@ -87,13 +92,50 @@ namespace Server.Services
             _context.SaveChanges();
             return roledata;
         }
-        public Role UpdateRole(int roleid)
+        public Role UpdateRole(Role roledata)
+        {            
+            var updaterole = new Role()
+            {
+                Id = roledata.Id,
+                Name = roledata.Name,
+                isActive = true,
+                ts = DateTime.Now
+
+            };
+            _context.Roles.Update(updaterole);
+            _context.SaveChanges();
+            return roledata;
+        }
+        public Boolean DeleteRole(Role roledata)
         {
-            //_context.Roles
-            // .Where(x => x.Id==roleid && x.isActive)
-            // .(x => new Role { IsActive = false });
-            //_context.Roles.Update()
-            Role roledata = new Role();
+            var updaterole = new Role()
+            {
+                Id = roledata.Id,
+                Name = roledata.Name,
+                isActive = false,
+                ts = DateTime.Now
+            };
+            try
+            {
+                _context.Roles.Update(updaterole);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw new Exception("Record does not exist in the database");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return true;
+        }
+        public List<Role> getRole(string roleid)
+        {            
+            var data = from s in _context.Roles
+                        where EF.Functions.Like(s.Id.ToString(), roleid) && s.isActive==true
+                        select s;
+            List<Role> roledata = data.ToList<Role>();
             return roledata;
         }
     }
