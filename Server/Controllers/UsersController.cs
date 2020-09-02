@@ -154,10 +154,48 @@ namespace Server.Controllers
 
             return user;
         }
+        //User Role CRUD
+        [HttpPost]
+        [Route("Role")]
+        public string InsertRole(Role roledata)
+        {
+            // var user = await _context.Users.FindAsync(id);
 
+
+            var role = _context.Roles.Where(e => e.Name == roledata.Name);
+
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            if (role.Count() > 0)
+            {
+                retdata.statuscode = "406";
+                retdata.status = "Duplicate Record";
+                returnstatus.Add(retdata);
+                result["status"] = returnstatus;
+                result["role"] = returndata;
+            }
+            else
+            {
+                retdata.statuscode = "200";
+                retdata.status = "Success";
+                returnstatus.Add(retdata);
+                Role roleresult = _userService.CreateRole(roledata);
+                returndata.Add(roleresult);
+                result["status"] = returnstatus;
+                result["role"] = returndata;
+
+            }
+            return JsonConvert.SerializeObject(result);
+
+        }
         private bool UserExists(long id)
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        
     }
 }
