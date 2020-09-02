@@ -34,7 +34,7 @@ namespace Server
          
             services.AddDbContext<ApplicationContext>(opt =>
             {
-                opt.UseNpgsql(Configuration.GetConnectionString("ApplicationContext"));
+                opt.UseNpgsql("Host=127.0.0.1;Port=5432;User Id=postgres;Password=snh86mmocc10;Database=ThankCard");
             });
             services.AddScoped<IUserService, UserService>();
         }
