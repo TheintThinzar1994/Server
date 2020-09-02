@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -106,7 +105,7 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                returndata = _userService.getData(name, "1234");
+                returndata = _userService.getData(name, password);
                 result["status"] =returnstatus ;
                 result["menu"] = returndata;
                 //result["message"] = "Success";
@@ -121,7 +120,8 @@ namespace Server.Controllers
                 result["menu"] = returndata;
            
             }
-            return JsonConvert.SerializeObject(result); 
+            return JsonConvert.SerializeObject(result);
+
         }
         
         [AllowAnonymous]
@@ -161,18 +161,14 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("Role")]
-        public string InsertRole(string  paramList)
+        public string InsertRole(String paramRole)
         {
             // var user = await _context.Users.FindAsync(id);
-            var arr = JObject.Parse(paramList);
-            string name = (string)arr["Name"];
+            var arr = JObject.Parse(paramRole);
+            string roleName = (string)arr["Name"];
+            
 
-            var roleData = new Role();
-            roleData.Name = name;
-            roleData.isActive = true;
-            roleData.ts = DateTime.Now;
-
-            var role = _context.Roles.Where(e => e.Name == name);
+            var role = _context.Roles.Where(e => e.Name == roleName);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -192,7 +188,9 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                Role roleresult = _userService.CreateRole(roleData);
+                Role roles = new Role();
+                roles.Name = roleName;
+                Role roleresult = _userService.CreateRole(roles);
                 returndata.Add(roleresult);
                 result["status"] = returnstatus;
                 result["role"] = returndata;
@@ -203,20 +201,12 @@ namespace Server.Controllers
         }
         [HttpPost]
         [Route("UpdateRole")]
-        public string UpdateRole(string paramList)
+        public string UpdateRole(Role roledata)
         {
             // var user = await _context.Users.FindAsync(id);
-            var arr = JObject.Parse(paramList);
-            string name = (string)arr["Name"];
-            int id = (int)arr["Id"];
 
-            var roleData = new Role();
-            roleData.Id = id;
-            roleData.Name = name;
-            roleData.isActive = true;
-            roleData.ts = DateTime.Now;
 
-            var role = _context.Roles.Where(e => e.Id == roleData.Id);
+            var role = _context.Roles.Where(e => e.Id == roledata.Id);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -228,7 +218,7 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                Role roleresult = _userService.UpdateRole(roleData);
+                Role roleresult = _userService.UpdateRole(roledata);
                 returndata.Add(roleresult);
                 result["status"] = returnstatus;
                 result["role"] = returndata;               
@@ -246,16 +236,12 @@ namespace Server.Controllers
         }
         [HttpPost]
         [Route("DeleteRole")]
-        public string DeleteRole(string paramList)
+        public string DeleteRole(Role roledata)
         {
             // var user = await _context.Users.FindAsync(id);
-            var arr = JObject.Parse(paramList); 
-            int id = (int)arr["Id"];
 
-            var roleData = new Role();
-            roleData.Id = id;
 
-            var role = _context.Roles.Where(e => e.Id == roleData.Id);
+            var role = _context.Roles.Where(e => e.Id == roledata.Id);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -265,7 +251,7 @@ namespace Server.Controllers
             if (role.Count() > 0)
             {
                 
-                Boolean roledelete = _userService.DeleteRole(roleData);
+                Boolean roledelete = _userService.DeleteRole(roledata);
                 if (roledelete)
                 {
                     retdata.statuscode = "200";
