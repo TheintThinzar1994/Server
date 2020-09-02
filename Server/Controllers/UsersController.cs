@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -21,7 +22,7 @@ namespace Server.Controllers
         private readonly ApplicationContext _context;
         private IUserService _userService;
 
-        public UsersController(ApplicationContext context,IUserService userService )
+        public UsersController(ApplicationContext context, IUserService userService)
         {
             _context = context;
             _userService = userService;
@@ -99,14 +100,14 @@ namespace Server.Controllers
 
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
-            ReturnData retdata = new ReturnData();           
+            ReturnData retdata = new ReturnData();
             if (user.Count() > 0)
             {
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
                 returndata = _userService.getData(name, "1234");
-                result["status"] =returnstatus ;
+                result["status"] = returnstatus;
                 result["menu"] = returndata;
                 //result["message"] = "Success";
             }
@@ -118,12 +119,11 @@ namespace Server.Controllers
                 result["status"] = returnstatus;
                 //result["message"] = "Failed";
                 result["menu"] = returndata;
-           
+
             }
             return JsonConvert.SerializeObject(result);
-
         }
-        
+
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
@@ -138,7 +138,7 @@ namespace Server.Controllers
             //catch (AppException ex)
             //{
             //    // return error message if there was an exception
-                
+
             //}
             return BadRequest();
         }
@@ -161,12 +161,18 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("Role")]
-        public string InsertRole(Role roledata)
+        public string InsertRole(string paramList)
         {
             // var user = await _context.Users.FindAsync(id);
+            var arr = JObject.Parse(paramList);
+            string name = (string)arr["Name"];
 
+            var roleData = new Role();
+            roleData.Name = name;
+            roleData.isActive = true;
+            roleData.ts = DateTime.Now;
 
-            var role = _context.Roles.Where(e => e.Name == roledata.Name);
+            var role = _context.Roles.Where(e => e.Name == name);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -186,7 +192,7 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                Role roleresult = _userService.CreateRole(roledata);
+                Role roleresult = _userService.CreateRole(roleData);
                 returndata.Add(roleresult);
                 result["status"] = returnstatus;
                 result["role"] = returndata;
@@ -197,12 +203,20 @@ namespace Server.Controllers
         }
         [HttpPost]
         [Route("UpdateRole")]
-        public string UpdateRole(Role roledata)
+        public string UpdateRole(string paramList)
         {
             // var user = await _context.Users.FindAsync(id);
+            var arr = JObject.Parse(paramList);
+            string name = (string)arr["Name"];
+            int id = (int)arr["Id"];
 
+            var roleData = new Role();
+            roleData.Id = id;
+            roleData.Name = name;
+            roleData.isActive = true;
+            roleData.ts = DateTime.Now;
 
-            var role = _context.Roles.Where(e => e.Id == roledata.Id);
+            var role = _context.Roles.Where(e => e.Id == roleData.Id);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -214,10 +228,10 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                Role roleresult = _userService.UpdateRole(roledata);
+                Role roleresult = _userService.UpdateRole(roleData);
                 returndata.Add(roleresult);
                 result["status"] = returnstatus;
-                result["role"] = returndata;               
+                result["role"] = returndata;
             }
             else
             {
@@ -232,12 +246,16 @@ namespace Server.Controllers
         }
         [HttpPost]
         [Route("DeleteRole")]
-        public string DeleteRole(Role roledata)
+        public string DeleteRole(string paramList)
         {
             // var user = await _context.Users.FindAsync(id);
+            var arr = JObject.Parse(paramList);
+            int id = (int)arr["Id"];
 
+            var roleData = new Role();
+            roleData.Id = id;
 
-            var role = _context.Roles.Where(e => e.Id == roledata.Id);
+            var role = _context.Roles.Where(e => e.Id == roleData.Id);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -246,8 +264,8 @@ namespace Server.Controllers
             ReturnData retdata = new ReturnData();
             if (role.Count() > 0)
             {
-                
-                Boolean roledelete = _userService.DeleteRole(roledata);
+
+                Boolean roledelete = _userService.DeleteRole(roleData);
                 if (roledelete)
                 {
                     retdata.statuscode = "200";
@@ -293,7 +311,7 @@ namespace Server.Controllers
             List<Role> getdata = _userService.getRole(roleid);
             returndata.Add(getdata);
             result["status"] = returnstatus;
-            result["role"] = returndata;           
+            result["role"] = returndata;
             return JsonConvert.SerializeObject(result);
 
         }
@@ -302,6 +320,6 @@ namespace Server.Controllers
             return _context.Users.Any(e => e.Id == id);
         }
 
-        
+
     }
 }
