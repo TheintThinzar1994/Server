@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Server.Model;
 using Server.Services;
 
@@ -84,11 +85,15 @@ namespace Server.Controllers
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Route("Check")]
-        public string CheckUser(string user_name,string password)
+        public string CheckUser(String paramsList)
         {
-            // var user = await _context.Users.FindAsync(id); 
-           
-            var user = _context.Users.Where(e => e.User_Name == user_name && e.Password == password);
+            // var user = await _context.Users.FindAsync(id);
+            var arr = JObject.Parse(paramsList);
+            string name = (string)arr["user_name"];
+            string password = (string)arr["password"];
+
+
+            var user = _context.Users.Where(e => e.User_Name == name && e.Password == password);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -100,7 +105,7 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                returndata = _userService.getData(user_name, "1234");
+                returndata = _userService.getData(name, "1234");
                 result["status"] =returnstatus ;
                 result["menu"] = returndata;
                 //result["message"] = "Success";
@@ -155,12 +160,12 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("Role")]
-        public string InsertRole(Role roledata)
+        public string InsertRole(String roleName)
         {
             // var user = await _context.Users.FindAsync(id);
 
 
-            var role = _context.Roles.Where(e => e.Name == roledata.Name);
+            var role = _context.Roles.Where(e => e.Name == roleName);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
