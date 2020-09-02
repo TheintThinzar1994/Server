@@ -55,7 +55,7 @@ namespace Server.Services
         public List<object> getData(string username,string password)
         {
             List<object> objlist = new List<object>();
-            var query = _context.Users.Where(x=>x.User_Name==username)
+            var query = _context.Users.Where(x => x.User_Name == username)
             .Join(
             _context.MenuRole,
             user => user.Role_ID,
@@ -73,8 +73,10 @@ namespace Server.Services
                     MenuID = menu.Id,
                     MenuName = menu.Menu_Name,
                     ParentID = menu.Parent_Id,
-                    Des=menu.Description,
-                    Action=menu.Action
+                    Des = menu.Description,
+                    Action = menu.Action,
+                    RoutePath = menu.RoutePath,
+                    Icon = menu.Icon
                 }
                 ).ToList();
             objlist = query.ToList<object>();           

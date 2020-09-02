@@ -169,8 +169,6 @@ D:\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.json
 D:\Server\Server\bin\Debug\netcoreapp3.1\Server.runtimeconfig.dev.json
 D:\Server\Server\bin\Debug\netcoreapp3.1\Server.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\Server.pdb
-D:\Server\Server\bin\Debug\netcoreapp3.1\AutoMapper.dll
-D:\Server\Server\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
@@ -321,3 +319,4 @@ D:\Server\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+D:\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
