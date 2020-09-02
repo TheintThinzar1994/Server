@@ -161,12 +161,12 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("Role")]
-        public string InsertRole(Role roledata)
+        public string InsertRole(String roleName)
         {
             // var user = await _context.Users.FindAsync(id);
 
 
-            var role = _context.Roles.Where(e => e.Name == roledata.Name);
+            var role = _context.Roles.Where(e => e.Name == roleName);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
