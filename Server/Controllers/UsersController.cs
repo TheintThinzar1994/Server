@@ -105,7 +105,7 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                returndata = _userService.getData(name, "1234");
+                returndata = _userService.getData(name, password);
                 result["status"] =returnstatus ;
                 result["menu"] = returndata;
                 //result["message"] = "Success";
@@ -161,10 +161,12 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("Role")]
-        public string InsertRole(String roleName)
+        public string InsertRole(String paramRole)
         {
             // var user = await _context.Users.FindAsync(id);
-
+            var arr = JObject.Parse(paramRole);
+            string roleName = (string)arr["Name"];
+            
 
             var role = _context.Roles.Where(e => e.Name == roleName);
 
@@ -186,7 +188,9 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                Role roleresult = _userService.CreateRole(roledata);
+                Role roles = new Role();
+                roles.Name = roleName;
+                Role roleresult = _userService.CreateRole(roles);
                 returndata.Add(roleresult);
                 result["status"] = returnstatus;
                 result["role"] = returndata;
