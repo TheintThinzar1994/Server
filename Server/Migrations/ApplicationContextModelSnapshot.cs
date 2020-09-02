@@ -110,6 +110,9 @@ namespace Server.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
+
                     b.Property<bool>("Is_Active")
                         .HasColumnType("boolean");
 
@@ -125,6 +128,9 @@ namespace Server.Migrations
 
                     b.Property<long>("Parent_Id")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("RoutePath")
+                        .HasColumnType("text"); 
 
                     b.Property<DateTime>("Updated_Date")
                         .HasColumnType("timestamp without time zone");
