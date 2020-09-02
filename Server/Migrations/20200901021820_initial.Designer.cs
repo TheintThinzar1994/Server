@@ -117,6 +117,12 @@ namespace Server.Migrations
 
                     b.Property<string>("Menu_Name")
                         .HasColumnType("text");
+                    
+                    b.Property<string>("RoutePath")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("text");
 
                     b.Property<long>("Parent_Id")
                         .HasColumnType("bigint");

@@ -19,6 +19,8 @@ namespace Server.Model
 
         public DateTime Updated_Date { get; set; }
         public String Action { get; set; }
+        public String RoutePath { get; set; }
+        public String Icon { get; set; }
         public bool Is_Active { get; set; }
         public DateTime ts { get; set; }
         
