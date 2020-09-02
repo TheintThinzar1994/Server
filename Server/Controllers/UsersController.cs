@@ -87,8 +87,7 @@ namespace Server.Controllers
         [Route("Check")]
         public string CheckUser(string user_name,string password)
         {
-            // var user = await _context.Users.FindAsync(id);
-
+            // var user = await _context.Users.FindAsync(id); 
            
             var user = _context.Users.Where(e => e.User_Name == user_name && e.Password == password);
 

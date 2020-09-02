@@ -35,6 +35,8 @@ namespace Server.Migrations
                     Created_Date = table.Column<DateTime>(nullable: false),
                     Updated_Date = table.Column<DateTime>(nullable: false),
                     Action = table.Column<string>(nullable: true),
+                    RoutePath = table.Column<string>(nullable: true),
+                    Icon = table.Column<string>(nullable: true),
                     Is_Active = table.Column<bool>(nullable: false),
                     ts = table.Column<DateTime>(nullable: false)
                 },
