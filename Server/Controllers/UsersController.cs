@@ -155,6 +155,7 @@ namespace Server.Controllers
             return user;
         }
         //User Role CRUD
+
         [HttpPost]
         [Route("Role")]
         public string InsertRole(Role roledata)
@@ -188,6 +189,108 @@ namespace Server.Controllers
                 result["role"] = returndata;
 
             }
+            return JsonConvert.SerializeObject(result);
+
+        }
+        [HttpPost]
+        [Route("UpdateRole")]
+        public string UpdateRole(Role roledata)
+        {
+            // var user = await _context.Users.FindAsync(id);
+
+
+            var role = _context.Roles.Where(e => e.Id == roledata.Id);
+
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            if (role.Count() > 0)
+            {
+                retdata.statuscode = "200";
+                retdata.status = "Success";
+                returnstatus.Add(retdata);
+                Role roleresult = _userService.UpdateRole(roledata);
+                returndata.Add(roleresult);
+                result["status"] = returnstatus;
+                result["role"] = returndata;               
+            }
+            else
+            {
+                retdata.statuscode = "304";
+                retdata.status = "Not Modified";
+                returnstatus.Add(retdata);
+                result["status"] = returnstatus;
+                result["role"] = returndata;
+            }
+            return JsonConvert.SerializeObject(result);
+
+        }
+        [HttpPost]
+        [Route("DeleteRole")]
+        public string DeleteRole(Role roledata)
+        {
+            // var user = await _context.Users.FindAsync(id);
+
+
+            var role = _context.Roles.Where(e => e.Id == roledata.Id);
+
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            if (role.Count() > 0)
+            {
+                
+                Boolean roledelete = _userService.DeleteRole(roledata);
+                if (roledelete)
+                {
+                    retdata.statuscode = "200";
+                    retdata.status = "Success";
+                    returnstatus.Add(retdata);
+                }
+                else
+                {
+                    retdata.statuscode = "304";
+                    retdata.status = "Fail";
+                    returnstatus.Add(retdata);
+                }
+                returndata.Add(role);
+                result["status"] = returnstatus;
+                result["role"] = returndata;
+            }
+            else
+            {
+                retdata.statuscode = "304";
+                retdata.status = "No Data To Delete";
+                returnstatus.Add(retdata);
+                result["status"] = returnstatus;
+                result["role"] = returndata;
+            }
+            return JsonConvert.SerializeObject(result);
+
+        }
+
+        [HttpPost]
+        [Route("GetRole")]
+        public string GetRole(string roleid)
+        {
+            // var user = await _context.Users.FindAsync(id);
+
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            List<Role> getdata = _userService.getRole(roleid);
+            returndata.Add(getdata);
+            result["status"] = returnstatus;
+            result["role"] = returndata;           
             return JsonConvert.SerializeObject(result);
 
         }
