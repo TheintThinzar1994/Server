@@ -82,7 +82,7 @@ namespace Server.Controllers
             departData.Is_Active = true;
             departData.ts = DateTime.Now;
 
-            var department = _context.Departments.Where(e => e.Id == departData.Id);
+            var department = _context.Departments.Where(e => e.Id == departData.Id && e.Name == departData.Name);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -127,14 +127,14 @@ namespace Server.Controllers
             // var user = await _context.Users.FindAsync(id);
             var arr = JObject.Parse(paramList);
             string deptName = (string)arr["Name"];
-            int dept_Id = (int)arr["Dept_Id"];
+            //int dept_Id = (int)arr["Dept_Id"];
 
             var deptData = new Department();
             deptData.Name = deptName;
             deptData.Is_Active = true;
             deptData.ts = DateTime.Now;
             // check duplicate department when creating department
-            var department = _context.Departments.Where(e => e.Name == deptName && e.Id == dept_Id);
+            var department = _context.Departments.Where(e => e.Name == deptName);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -153,7 +153,7 @@ namespace Server.Controllers
             {   //come from client data
                 var deptdata = new Department();
                 deptdata.Name = deptName;
-                deptdata.Id = dept_Id;
+                //deptdata.Id = dept_Id;
                 deptdata.Is_Active = true;
                 deptdata.ts = DateTime.Now;
                 retdata.statuscode = "200";

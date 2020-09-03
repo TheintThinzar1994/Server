@@ -17,11 +17,12 @@ namespace Server.Controllers
     public class SubDepartmentsController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private SubDepartmentService _subdeptservice;
+        private ISubDepartmentService _subdeptservice;
 
-        public SubDepartmentsController(ApplicationContext context)
+        public SubDepartmentsController(ApplicationContext context, ISubDepartmentService subdepartservice)
         {
             _context = context;
+            _subdeptservice = subdepartservice;
         }
 
         // GET: api/SubDepartments
@@ -181,7 +182,7 @@ namespace Server.Controllers
             int Dept_Id = (int)arr["Dept_Id"];
 
             //Checking Data Have or Not in SubDepartments Table
-            var subdepartment = _context.SubDepartments.Where(e => e.Id == id);
+            var subdepartment = _context.SubDepartments.Where(e => e.Name==name && e.Dept_Id==Dept_Id);
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
