@@ -82,7 +82,7 @@ namespace Server.Controllers
             departData.Is_Active = true;
             departData.ts = DateTime.Now;
 
-            var department = _context.Departments.Where(e => e.Id == departData.Id);
+            var department = _context.Departments.Where(e => e.Id == departData.Id && e.Name==name);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
