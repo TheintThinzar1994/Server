@@ -82,7 +82,7 @@ namespace Server.Controllers
             departData.Is_Active = true;
             departData.ts = DateTime.Now;
 
-            var department = _context.Departments.Where(e => e.Id == departData.Id);
+            var department = _context.Departments.Where(e => e.Id == departData.Id && e.Name==name);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -127,14 +127,14 @@ namespace Server.Controllers
             // var user = await _context.Users.FindAsync(id);
             var arr = JObject.Parse(paramList);
             string deptName = (string)arr["Name"];
-            int dept_Id = (int)arr["Dept_Id"];
+             
 
             var deptData = new Department();
             deptData.Name = deptName;
             deptData.Is_Active = true;
             deptData.ts = DateTime.Now;
             // check duplicate department when creating department
-            var department = _context.Departments.Where(e => e.Name == deptName && e.Id == dept_Id);
+            var department = _context.Departments.Where(e => e.Name == deptName);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -153,7 +153,7 @@ namespace Server.Controllers
             {   //come from client data
                 var deptdata = new Department();
                 deptdata.Name = deptName;
-                deptdata.Id = dept_Id;
+                //deptdata.Id = dept_Id;
                 deptdata.Is_Active = true;
                 deptdata.ts = DateTime.Now;
                 retdata.statuscode = "200";
@@ -175,22 +175,20 @@ namespace Server.Controllers
         public string deleteDepartment(string paramList)
         {
             // var user = await _context.Users.FindAsync(id);
-            var arr = JObject.Parse(paramList);
-            string name = (string)arr["Name"];
+            var arr = JObject.Parse(paramList); 
             int deptid = (int)arr["Id"];
 
             var deptData = new Department();
             deptData.Id = deptid;
-            deptData.Name = name;
 
-            var department = _context.Departments.Where(e => e.Name == name);
+            var department = _context.Departments.Where(e => e.Id == deptid);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
-            if (department.Count() > 0)
+            if (department.Count() < 0)
             {
                 retdata.statuscode = "400";
                 retdata.status = "Bad Request";
