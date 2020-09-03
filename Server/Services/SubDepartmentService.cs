@@ -10,7 +10,7 @@ namespace Server.Services
     public interface ISubDepartmentService
     {
        
-        List<SubDepartment> getSubDepartment(string subdptid);
+        List<object> getSubDepartment(string subdptid);
         SubDepartment CreateSubDepartment(SubDepartment subdptdata);
         SubDepartment UpdateSubDepartment(SubDepartment subdptdata);
         Boolean DeleteSubDepartment(SubDepartment subdata);
@@ -24,13 +24,14 @@ namespace Server.Services
         {
             _context = context;
         }
-        public List<SubDepartment> getSubDepartment(string subdptid)
+        public List<object> getSubDepartment(string subdptid)
         {
-            List<SubDepartment> subdptlist = new List<SubDepartment>();
-            var data = from s in _context.SubDepartments
+            List<object> subdptlist = new List<object>();            
+            var data1 = from s in _context.SubDepartments
+                        join d in _context.Departments on s.Dept_Id equals d.Id
                        where EF.Functions.Like(s.Id.ToString(), subdptid) && s.Is_Active == 1
-                       select s;
-            subdptlist = data.ToList<SubDepartment>();
+                       select new { Sub_Dept_Id=s.Id,Sub_Dept_Name=s.Name,Dept_Name=d.Name,Dept_Id=d.Id};
+            subdptlist = data1.ToList<object>();
             return subdptlist;
         }
         public SubDepartment CreateSubDepartment(SubDepartment subdptdata)
