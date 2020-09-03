@@ -116,7 +116,7 @@ namespace Server.Controllers
             retdata.statuscode = "200";
             retdata.status = "Success";
             returnstatus.Add(retdata);
-            List<SubDepartment> getdata = _subdeptservice.getSubDepartment(subdptid);
+            List<object> getdata = _subdeptservice.getSubDepartment(subdptid);
             returndata.Add(getdata);
             result["status"] = returnstatus;
             result["subdepartment"] = returndata;

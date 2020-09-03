@@ -20,6 +20,11 @@ namespace Server.Services
         Boolean DeleteRole(Role roledata);
 
         List<Role> getRole(string roleid);
+
+        List<object> getUser(string userid);
+        User InsertUser(User userdata);
+        User UpdateUser(User userdata);
+        User DeleteUser(User userdata);
         //void Update(User user, string password = null);
         // void Delete(int id);
     }
@@ -139,6 +144,59 @@ namespace Server.Services
                         select s;
             List<Role> roledata = data.ToList<Role>();
             return roledata;
+        }
+        public List<object> getUser(string userid)
+        {
+           
+            var data = (from user in _context.Users
+                        join role in _context.Roles on user.Role_ID equals role.Id
+                        where EF.Functions.Like(user.Id.ToString(), userid) && user.isActive == true
+                        select new { user.Id,user.User_Name,user.Password,user.Created_Date,user.Updated_Date,user.Role_ID,RoleName=role.Name});
+            
+            List<object> userresult = data.ToList<object>();
+            return userresult;
+        }
+        public User InsertUser(User userdata)
+        {
+            _context.Users.Add(userdata);
+            _context.SaveChanges();
+            return userdata;
+        }
+        public User UpdateUser(User userdata)
+        {
+            var updateuser = new User()
+            {
+                Id = userdata.Id,
+                User_Name = userdata.User_Name,
+                Password = userdata.Password,
+                isActive = true,
+                Updated_Date=DateTime.Now,
+                ts=DateTime.Now,
+                Role_ID=userdata.Role_ID
+
+            };
+            _context.Users.Update(updateuser);
+            _context.SaveChanges();
+            var userdata1 = (User) _context.Users.Where(e => e.Id == userdata.Id);
+            return userdata1;
+        }
+        public User DeleteUser(User userdata)
+        {
+            var updateuser = new User()
+            {
+                Id = userdata.Id,
+                User_Name = userdata.User_Name,
+                Password = userdata.Password,
+                isActive = false,
+                Updated_Date = DateTime.Now,
+                ts = DateTime.Now,
+                Role_ID = userdata.Role_ID
+
+            };
+            _context.Users.Update(updateuser);
+            _context.SaveChanges();
+            var userdata1 = (User)_context.Users.Where(e => e.Id == userdata.Id);
+            return userdata1;
         }
     }
 

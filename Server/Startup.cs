@@ -34,12 +34,10 @@ namespace Server
          
             services.AddDbContext<ApplicationContext>(opt =>
             {
-                opt.UseNpgsql(Configuration.GetConnectionString("ApplicationContext")) ;
+                opt.UseNpgsql(Configuration.GetConnectionString("ApplicationContext"));
+                //opt.UseNpgsql("ApplicationContext");
             });
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ISubDepartmentService, SubDepartmentService>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
