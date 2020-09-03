@@ -233,6 +233,16 @@ namespace Server.Controllers
                 result["status"] = returnstatus;
                 result["role"] = returndata;
             }
+            //var checkRole= _context.Roles.Where(e => e.Id != roleData.Id && e.Name == roleData.Name);
+            //if (checkRole.Count() > 0)
+            //{
+            //retdata.status = "Duplicated Data";
+            //}
+            //else {
+
+            //    }
+
+            //}
             else
             {
                 retdata.statuscode = "304";
@@ -294,8 +304,8 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost]
-        [Route("GetRole")]
+        [HttpGet]
+        [Route("Getrole")]
         public string GetRole(string roleid)
         {
             // var user = await _context.Users.FindAsync(id);
