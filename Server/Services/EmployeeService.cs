@@ -11,6 +11,7 @@ namespace Server.Services
     {
         List<object> getEmployee(string subdptid);
         Employee CreateEmployee(Employee empdata);
+        Employee UpdateEmployee(Employee empupdate);
     }
     public class EmployeeService : IEmployeeService
     {
