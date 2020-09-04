@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Server\\Server\\Server.csproj": {}
+    "D:\\Team3ST\\Server\\Server.csproj": {}
   },
   "projects": {
-    "D:\\Server\\Server\\Server.csproj": {
+    "D:\\Team3ST\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "D:\\Team3ST\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "D:\\Server\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\Server\\Server\\obj\\",
+        "projectPath": "D:\\Team3ST\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
+        "outputPath": "D:\\Team3ST\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -42,6 +42,12 @@
               "target": "Package",
               "version": "[5.2.7, )"
             },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.7, )"
@@ -63,6 +69,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "Newtonsoft.Json.Bson": {
+              "target": "Package",
+              "version": "[1.0.2, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
