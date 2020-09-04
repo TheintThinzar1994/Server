@@ -88,8 +88,6 @@ namespace Server.Controllers
             string name = (string)arr["User_Name"];
             string password = (string)arr["password"];
             int Role_Id = (int)arr["role_id"];
-            int Emp_Id = (int)arr["emp_id"];
-           
 
             //Checking Duplicate Records in Users by SSM
             var user = _context.Users.Where(e => e.User_Name == name);
@@ -123,18 +121,18 @@ namespace Server.Controllers
                 User userresult = _userService.InsertUser(userData);
 
 
-                List<Employee> emplist = new List<Employee>();
-                var data1 = from s in _context.Employees
-                            where s.Id == Emp_Id && s.isActive == true
-                            select s;
-                emplist = data1.ToList<Employee>();
-                Employee empdata = new Employee();
-                if (emplist.Count() > 0)
-                {
-                    empdata = emplist[0];
-                    empdata.User_Id = (long)userresult.Id;
-                    Employee empresult = _empService.UpdateEmployee(empdata);
-                }
+                //List<Employee> emplist = new List<Employee>();
+                //var data1 = from s in _context.Employees
+                //            where s.Id == Emp_Id && s.isActive == true
+                //            select s;
+                //emplist = data1.ToList<Employee>();
+                //Employee empdata = new Employee();
+                //if (emplist.Count() > 0)
+                //{
+                //    empdata = emplist[0];
+                //    empdata.User_Id = (long)userresult.Id;
+                //    Employee empresult = _empService.UpdateEmployee(empdata);
+                //}
 
                 retdata.statuscode = "200";
                 retdata.status = "Success";
@@ -157,6 +155,7 @@ namespace Server.Controllers
             string name = (string)arr["User_Name"];
             string password = (string)arr["password"];
             int Role_Id = (int)arr["role_id"];
+            int Emp_Id = (int)arr["emp_id"];
 
 
             //Checking Duplicate Records in Users by SSM
@@ -180,12 +179,13 @@ namespace Server.Controllers
             else
             {
                 var userData = new User();
+                userData.Id = Id;
                 userData.User_Name = name;
                 userData.Password = password;
                 userData.isActive = true;
                 userData.Updated_Date = DateTime.Now;
                 userData.ts = DateTime.Now;
-                userData.Role_ID = Role_Id;
+                userData.Role_ID = Role_Id;  
 
                 retdata.statuscode = "200";
                 retdata.status = "Success";
@@ -223,7 +223,7 @@ namespace Server.Controllers
             if (user.Count() > 0)
             { 
                 // Checking User Already Assigned in Employee or Not
-                var employee = _context.Employees.Where(e => e.User_Id == Id);
+                var employee = _context.Employees.Where(e => e.User_Id == Id && e.isActive==true);
                 if (employee.Count() < 0)
                 {
 
