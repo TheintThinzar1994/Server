@@ -270,7 +270,7 @@ namespace Server.Controllers
                     var subdeptdata = new SubDepartment();
                     //subdeptdata.Id = id;
                     //subdeptdata.Name = subdata.Name;
-                    //subdeptdata.Dept_Id = subdata.Dept_Id;
+                    subdeptdata.Dept_Id = subdata.Dept_Id;
                     subdeptdata.Is_Active = 0;
                     subdeptdata.ts = DateTime.Now;
 
