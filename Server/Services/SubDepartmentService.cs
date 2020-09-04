@@ -60,15 +60,17 @@ namespace Server.Services
         public Boolean DeleteSubDepartment(SubDepartment subdata)
         {
             Boolean retresult = true;
-            var updatesub = new SubDepartment()
-            {
-                Id = subdata.Id,
-                Is_Active = subdata.Is_Active,
-                ts = subdata.ts
-            };
+            //var updatesub = new SubDepartment()
+            //{
+            //    Id = subdata.Id,
+            //    Name=subdata.Name,
+            //    Dept_Id=subdata.Dept_Id,
+            //    Is_Active = subdata.Is_Active,
+            //    ts = subdata.ts
+            //};
             try
             {
-                _context.SubDepartments.Update(updatesub);
+                _context.SubDepartments.Update(subdata);
                 _context.SaveChanges();
                 retresult = true;
             }

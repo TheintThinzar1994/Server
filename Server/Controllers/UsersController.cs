@@ -21,11 +21,13 @@ namespace Server.Controllers
     {
         private readonly ApplicationContext _context;
         private IUserService _userService;
+        private IEmployeeService _empService;
 
-        public UsersController(ApplicationContext context, IUserService userService)
+        public UsersController(ApplicationContext context, IUserService userService,IEmployeeService empService)
         {
             _context = context;
             _userService = userService;
+            _empService = empService;
         }
 
         // GET: api/Users
@@ -86,6 +88,7 @@ namespace Server.Controllers
             string name = (string)arr["User_Name"];
             string password = (string)arr["password"];
             int Role_Id = (int)arr["role_id"];
+            int Emp_Id = (int)arr["emp_id"];
            
 
             //Checking Duplicate Records in Users by SSM
@@ -116,12 +119,27 @@ namespace Server.Controllers
                 userData.Updated_Date = DateTime.Now;
                 userData.ts = DateTime.Now;
                 userData.Role_ID = Role_Id;
+                
+                User userresult = _userService.InsertUser(userData);
+
+
+                List<Employee> emplist = new List<Employee>();
+                var data1 = from s in _context.Employees
+                            where s.Id == Emp_Id && s.isActive == true
+                            select s;
+                emplist = data1.ToList<Employee>();
+                Employee empdata = new Employee();
+                if (emplist.Count() > 0)
+                {
+                    empdata = emplist[0];
+                    empdata.User_Id = (long)userresult.Id;
+                    Employee empresult = _empService.UpdateEmployee(empdata);
+                }
 
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                User roleresult = _userService.InsertUser(userData);
-                returndata.Add(roleresult);
+                returndata.Add(userresult);
                 result["status"] = returnstatus;
                 result["user"] = returndata;
 
@@ -187,13 +205,13 @@ namespace Server.Controllers
         {
             var arr = JObject.Parse(paramList);
             int Id = (int)arr["Id"];
-            string name = (string)arr["User_Name"];
-            string password = (string)arr["password"];
-            int Role_Id = (int)arr["role_id"];
+            //string name = (string)arr["User_Name"];
+            //string password = (string)arr["password"];
+            //int Role_Id = (int)arr["role_id"];
 
 
             //Checking Duplicate Records in Users by SSM
-            var user = _context.Users.Where(e => e.User_Name == name && e.isActive==true);
+            var user = _context.Users.Where(e => e.Id == Id && e.isActive==true);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -203,19 +221,27 @@ namespace Server.Controllers
 
             // Data Have in Database or Not to delete
             if (user.Count() > 0)
-            {
-                var userData = new User();
-                userData.Id = Id;
-                userData.User_Name = name;
-                userData.Password = password;
-                userData.isActive = false;
-                userData.Updated_Date = DateTime.Now;
-                userData.ts = DateTime.Now;
-                userData.Role_ID = Role_Id;
+            { 
                 // Checking User Already Assigned in Employee or Not
-                var employee = _context.Employees.Where(e => e.User_Id == userData.Id);
+                var employee = _context.Employees.Where(e => e.User_Id == Id);
                 if (employee.Count() < 0)
-                {                   
+                {
+
+                    List<User> userlist = new List<User>();
+                    var data1 = from u in _context.Users
+                                where u.Id == Id && u.isActive == true
+                                select u;
+                    userlist = data1.ToList<User>();
+                    User userData = new User();
+                    userData = userlist[0];
+                    userData.Id = userData.Id;
+                    userData.User_Name = userData.User_Name;
+                    userData.Password = userData.Password;
+                    userData.isActive = false;
+                    userData.Updated_Date = DateTime.Now;
+                    userData.ts = DateTime.Now;
+                    userData.Role_ID = userData.Role_ID;
+
                     User userresult = _userService.DeleteUser(userData);
                     returndata.Add(userresult);
                     retdata.statuscode = "200";
@@ -226,7 +252,7 @@ namespace Server.Controllers
                 }
                 else
                 {
-                    retdata.statuscode = "406";
+                    retdata.statuscode = "304";
                     retdata.status = "Data Have already used in employee";
                     returnstatus.Add(retdata);
                     result["status"] = returnstatus;
@@ -366,6 +392,7 @@ namespace Server.Controllers
             roleData.isActive = true;
             roleData.ts = DateTime.Now;
 
+            //Checking Duplicate Records in Role by SSM
             var role = _context.Roles.Where(e => e.Name == name);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -373,6 +400,8 @@ namespace Server.Controllers
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
+
+            // Return Conditions Checking for No Duplicate or Not
             if (role.Count() > 0)
             {
                 retdata.statuscode = "406";
@@ -410,6 +439,10 @@ namespace Server.Controllers
             roleData.isActive = true;
             roleData.ts = DateTime.Now;
 
+            //Checking Duplicate Records in Sub Departments by SSM
+            var duprole = _context.Roles.Where(e => e.Name == name && e.isActive == true);
+
+            //Check Data already have in database or not 
             var role = _context.Roles.Where(e => e.Id == roleData.Id);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -417,34 +450,39 @@ namespace Server.Controllers
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
-            if (role.Count() > 0)
+
+            //Duplicate Record or Not
+            if (duprole.Count() > 0)
             {
-                retdata.statuscode = "200";
-                retdata.status = "Success";
+                retdata.statuscode = "406";
+                retdata.status = "Duplicate Data";
                 returnstatus.Add(retdata);
-                Role roleresult = _userService.UpdateRole(roleData);
-                returndata.Add(roleresult);
                 result["status"] = returnstatus;
                 result["role"] = returndata;
             }
-            //var checkRole= _context.Roles.Where(e => e.Id != roleData.Id && e.Name == roleData.Name);
-            //if (checkRole.Count() > 0)
-            //{
-            //retdata.status = "Duplicated Data";
-            //}
-            //else {
-
-            //    }
-
-            //}
             else
             {
-                retdata.statuscode = "304";
-                retdata.status = "Not Modified";
-                returnstatus.Add(retdata);
-                result["status"] = returnstatus;
-                result["role"] = returndata;
+                // Checking Data Have in Database or Not (Before Updating)
+                if (role.Count() > 0)
+                {
+                    retdata.statuscode = "200";
+                    retdata.status = "Success";
+                    returnstatus.Add(retdata);
+                    Role roleresult = _userService.UpdateRole(roleData);
+                    returndata.Add(roleresult);
+                    result["status"] = returnstatus;
+                    result["role"] = returndata;
+                }
+                else
+                {
+                    retdata.statuscode = "304";
+                    retdata.status = "No Data To Modify";
+                    returnstatus.Add(retdata);
+                    result["status"] = returnstatus;
+                    result["role"] = returndata;
+                }
             }
+            
             return JsonConvert.SerializeObject(result);
 
         }

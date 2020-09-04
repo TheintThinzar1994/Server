@@ -36,6 +36,7 @@ namespace Server
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<ISubDepartmentService, SubDepartmentService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
         }
 
