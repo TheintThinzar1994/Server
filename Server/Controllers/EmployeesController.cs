@@ -224,7 +224,7 @@ namespace Server.Controllers
 
 
             //Checking Duplicate Records in Sub Departments by SSM
-            var emp_var = _context.Employees.Where(e =>  e.Id==Id);
+            var emp_var = _context.Employees.Where(e =>  e.Id==Id && e.isActive==true);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
