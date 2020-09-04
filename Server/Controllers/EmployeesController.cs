@@ -205,18 +205,18 @@ namespace Server.Controllers
         {
             var arr = JObject.Parse(paramList);
             int Id = (int)arr["Id"];
-            string name = (string)arr["Name"];
-            int sub_dept_id = (int)arr["Sub_Dept_Id"];
-            int dept_id = (int)arr["Dept_Id"];
-            int user_id = (int)arr["User_Id"];
-            string address = (string)arr["Address"];
-            string email = (string)arr["email"];
-            int phone = (int)arr["phone"];
-            string photoname = (string)arr["photoname"];
+            //string name = (string)arr["Name"];
+            //int sub_dept_id = (int)arr["Sub_Dept_Id"];
+            //int dept_id = (int)arr["Dept_Id"];
+            //int user_id = (int)arr["User_Id"];
+            //string address = (string)arr["Address"];
+            //string email = (string)arr["email"];
+            //int phone = (int)arr["phone"];
+            //string photoname = (string)arr["photoname"];
 
 
             //Checking Duplicate Records in Sub Departments by SSM
-            var emp_var = _context.Employees.Where(e => e.User_Name == name && e.Id==Id);
+            var emp_var = _context.Employees.Where(e =>  e.Id==Id);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -236,17 +236,25 @@ namespace Server.Controllers
             else
             {
                 //Deleting data from Database
-                var empdata = new Employee();
+                List<Employee> emplist = new List<Employee>();
+                var data1 = from e in _context.Employees
+                            where e.Id == Id && e.isActive == true
+                            select e;
+                emplist = data1.ToList<Employee>();
+                Employee empdata = new Employee();
+                empdata = emplist[0];
+
                 empdata.Id = Id;
-                empdata.User_Name = name;
-                empdata.Sub_Dept_Id = sub_dept_id;
-                empdata.Dept_Id = dept_id;
-                empdata.User_Id = user_id;
-                empdata.Address = address;
-                empdata.Email = email;
-                empdata.Phone = phone;
-                empdata.PhotoName = photoname;
+                empdata.User_Name = empdata.User_Name;
+                empdata.Sub_Dept_Id = empdata.Sub_Dept_Id;
+                empdata.Dept_Id = empdata.Dept_Id;
+                empdata.User_Id = empdata.User_Id;
+                empdata.Address = empdata.Address;
+                empdata.Email = empdata.Email;
+                empdata.Phone = empdata.Phone;
+                empdata.PhotoName = empdata.PhotoName;
                 empdata.isActive = false;
+                empdata.Created_Date = empdata.Created_Date;
                 empdata.End_Date = DateTime.Now;
                 empdata.ts = DateTime.Now;
                 //Updateing data from tables
