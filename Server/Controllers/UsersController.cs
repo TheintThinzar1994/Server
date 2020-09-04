@@ -187,13 +187,13 @@ namespace Server.Controllers
         {
             var arr = JObject.Parse(paramList);
             int Id = (int)arr["Id"];
-            string name = (string)arr["User_Name"];
-            string password = (string)arr["password"];
-            int Role_Id = (int)arr["role_id"];
+            //string name = (string)arr["User_Name"];
+            //string password = (string)arr["password"];
+            //int Role_Id = (int)arr["role_id"];
 
 
             //Checking Duplicate Records in Users by SSM
-            var user = _context.Users.Where(e => e.User_Name == name && e.isActive==true);
+            var user = _context.Users.Where(e => e.Id == Id && e.isActive==true);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -203,19 +203,27 @@ namespace Server.Controllers
 
             // Data Have in Database or Not to delete
             if (user.Count() > 0)
-            {
-                var userData = new User();
-                userData.Id = Id;
-                userData.User_Name = name;
-                userData.Password = password;
-                userData.isActive = false;
-                userData.Updated_Date = DateTime.Now;
-                userData.ts = DateTime.Now;
-                userData.Role_ID = Role_Id;
+            { 
                 // Checking User Already Assigned in Employee or Not
-                var employee = _context.Employees.Where(e => e.User_Id == userData.Id);
+                var employee = _context.Employees.Where(e => e.User_Id == Id);
                 if (employee.Count() < 0)
-                {                   
+                {
+
+                    List<User> userlist = new List<User>();
+                    var data1 = from u in _context.Users
+                                where u.Id == Id && u.isActive == true
+                                select u;
+                    userlist = data1.ToList<User>();
+                    User userData = new User();
+                    userData = userlist[0];
+                    userData.Id = userData.Id;
+                    userData.User_Name = userData.User_Name;
+                    userData.Password = userData.Password;
+                    userData.isActive = false;
+                    userData.Updated_Date = DateTime.Now;
+                    userData.ts = DateTime.Now;
+                    userData.Role_ID = userData.Role_ID;
+
                     User userresult = _userService.DeleteUser(userData);
                     returndata.Add(userresult);
                     retdata.statuscode = "200";

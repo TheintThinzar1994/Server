@@ -160,7 +160,7 @@ namespace Server.Controllers
             else
             {
                 // Checking Data Have in Database or Not (Before Updating)
-                emp_var = _context.Employees.Where(e => e.User_Name == name && e.Dept_Id == dept_id && e.Sub_Dept_Id == sub_dept_id && e.Id==Id);
+                emp_var = _context.Employees.Where(e =>  e.Id==Id);
                 // There is No Data To Update
                 if(emp_var.Count()<0)
                 {
@@ -173,7 +173,13 @@ namespace Server.Controllers
                 // Updating Data into Database
                 else
                 {
-                    var empdata = new Employee();
+                    List<Employee> empdptlist = new List<Employee>();
+                    var data1 = from e in _context.Employees
+                                where e.Id == Id && e.isActive == true
+                                select e;
+                    empdptlist = data1.ToList<Employee>();
+                    Employee empdata = new Employee();
+                    empdata = empdptlist[0];
                     empdata.Id = Id;
                     empdata.User_Name = name;
                     empdata.Sub_Dept_Id = sub_dept_id;
@@ -184,6 +190,8 @@ namespace Server.Controllers
                     empdata.Phone = phone;
                     empdata.PhotoName = photoname;
                     empdata.isActive = true;
+                    empdata.Created_Date = empdata.Created_Date;
+                    empdata.End_Date = empdata.End_Date;
                     empdata.ts = DateTime.Now;
                     //Inserting data into tables
                     Employee empresult = _employeeservice.UpdateEmployee(empdata);
@@ -255,7 +263,7 @@ namespace Server.Controllers
                 empdata.PhotoName = empdata.PhotoName;
                 empdata.isActive = false;
                 empdata.Created_Date = empdata.Created_Date;
-                empdata.End_Date = DateTime.Now;
+                empdata.End_Date = empdata.End_Date;
                 empdata.ts = DateTime.Now;
                 //Updateing data from tables
                 Employee empresult = _employeeservice.UpdateEmployee(empdata);
