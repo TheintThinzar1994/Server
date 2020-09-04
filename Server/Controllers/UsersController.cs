@@ -495,7 +495,8 @@ namespace Server.Controllers
             var roleData = new Role();
             roleData.Id = id;
 
-            var role = _context.Roles.Where(e => e.Id == roleData.Id);
+            //Checking role data have or not before deleting
+            var role = _context.Roles.Where(e => e.Id == roleData.Id && e.isActive==true);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -504,23 +505,48 @@ namespace Server.Controllers
             ReturnData retdata = new ReturnData();
             if (role.Count() > 0)
             {
+                var userdata = from u in _context.Users
+                               where u.Role_ID == id && u.isActive == true
+                               select u;
+                List<User> seluserdata = new List<User>();
+                seluserdata = userdata.ToList<User>();
 
-                Boolean roledelete = _userService.DeleteRole(roleData);
-                if (roledelete)
+                var menurole = from m in _context.MenuRole
+                               where m.Role_Id == id && m.isActive == true
+                               select m;
+                List<MenuRole> menrobj = new List<MenuRole>();
+                menrobj = menurole.ToList<MenuRole>();
+
+                if (seluserdata.Count() > 0 || menrobj.Count()>0)
                 {
-                    retdata.statuscode = "200";
-                    retdata.status = "Success";
+                    retdata.statuscode = "406";
+                    retdata.status = "Data Already Used in User Table You Cann't ";
                     returnstatus.Add(retdata);
+                    result["status"] = returnstatus;
+                    result["role"] = returndata;
                 }
                 else
                 {
-                    retdata.statuscode = "304";
-                    retdata.status = "Fail";
-                    returnstatus.Add(retdata);
+                    Boolean roledelete = _userService.DeleteRole(roleData);
+
+                    if (roledelete)
+                    {
+                        retdata.statuscode = "200";
+                        retdata.status = "Success";
+                        returnstatus.Add(retdata);
+                    }
+                    else
+                    {
+                        retdata.statuscode = "304";
+                        retdata.status = "Fail";
+                        returnstatus.Add(retdata);
+                    }
+                    returndata.Add(role);
+                    result["status"] = returnstatus;
+                    result["role"] = returndata;
                 }
-                returndata.Add(role);
-                result["status"] = returnstatus;
-                result["role"] = returndata;
+
+                
             }
             else
             {
