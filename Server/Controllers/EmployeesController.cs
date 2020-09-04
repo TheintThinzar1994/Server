@@ -74,7 +74,7 @@ namespace Server.Controllers
                     throw;
                 }
             }
-
+            
             return NoContent();
         }
 
@@ -208,7 +208,7 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Route("DeleteEmployee")]
         public string DeleteEmployee(string paramList)
         {
