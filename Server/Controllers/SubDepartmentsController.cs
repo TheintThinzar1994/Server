@@ -171,7 +171,7 @@ namespace Server.Controllers
             return JsonConvert.SerializeObject(result);
 
         }
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateSubDept")]
         public string UpdateSubDepartment(string paramList)
         {
