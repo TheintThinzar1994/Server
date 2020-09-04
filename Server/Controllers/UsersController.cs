@@ -154,9 +154,7 @@ namespace Server.Controllers
             int Id = (int)arr["Id"];
             string name = (string)arr["User_Name"];
             string password = (string)arr["password"];
-            int Role_Id = (int)arr["role_id"];
-            int Emp_Id = (int)arr["emp_id"];
-
+            int Role_Id = (int)arr["role_id"]; 
 
             //Checking Duplicate Records in Users by SSM
             var user = _context.Users.Where(e => e.User_Name == name && e.isActive==true);
@@ -224,7 +222,7 @@ namespace Server.Controllers
             { 
                 // Checking User Already Assigned in Employee or Not
                 var employee = _context.Employees.Where(e => e.User_Id == Id && e.isActive==true);
-                if (employee.Count() < 0)
+                if (employee.Count() <= 0)
                 {
 
                     List<User> userlist = new List<User>();
@@ -263,8 +261,8 @@ namespace Server.Controllers
             }
             else
             {
-                retdata.statuscode = "406";
-                retdata.status = "Duplicate Record";
+                retdata.statuscode = "404";
+                retdata.status = "Not Found";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
                 result["user"] = returndata;
