@@ -188,18 +188,18 @@ namespace Server.Services
         }
         public User DeleteUser(User userdata)
         {
-            var updateuser = new User()
-            {
-                Id = userdata.Id,
-                User_Name = userdata.User_Name,
-                Password = userdata.Password,
-                isActive = false,
-                Updated_Date = DateTime.Now,
-                ts = DateTime.Now,
-                Role_ID = userdata.Role_ID
+            //var updateuser = new User()
+            //{
+            //    Id = userdata.Id,
+            //    User_Name = userdata.User_Name,
+            //    Password = userdata.Password,
+            //    isActive = false,
+            //    Updated_Date = DateTime.Now,
+            //    ts = DateTime.Now,
+            //    Role_ID = userdata.Role_ID
 
-            };
-            _context.Users.Update(updateuser);
+            //};
+            _context.Users.Update(userdata);
             _context.SaveChanges();
             var userdata1 = (User)_context.Users.Where(e => e.Id == userdata.Id);
             return userdata1;
