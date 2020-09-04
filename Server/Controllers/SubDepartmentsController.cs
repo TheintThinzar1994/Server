@@ -182,7 +182,7 @@ namespace Server.Controllers
             int Dept_Id = (int)arr["Dept_Id"];
 
             //Checking Data Have or Not in SubDepartments Table
-            var subdepartment = _context.SubDepartments.Where(e => e.Name==name && e.Dept_Id==Dept_Id);
+            var subdepartment = _context.SubDepartments.Where(e => e.Name==name && e.Id != id);
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -191,7 +191,7 @@ namespace Server.Controllers
             ReturnData retdata = new ReturnData();
 
             //Checking Data Have or Not in SubDepartments Table
-            if (subdepartment.Count() > 0)
+            if (subdepartment.Count() <=0)
             {
                 // Updating Row data with Client Update Data
                 var subdeptdata = new SubDepartment();
@@ -213,8 +213,8 @@ namespace Server.Controllers
             else
             {
                 // There is no data to update
-                retdata.statuscode = "304";
-                retdata.status = "Not Modified";
+                retdata.statuscode = "406";
+                retdata.status = "Duplicate Record";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
                 result["subdepartment"] = returndata;
@@ -228,13 +228,13 @@ namespace Server.Controllers
         {
             //Accepting data from 
             var arr = JObject.Parse(paramList);
-            string name = (string)arr["Name"];
+           // string name = (string)arr["Name"];
             int id = (int)arr["Id"];
             int Dept_Id = (int)arr["Dept_Id"];
 
             //Checking Data Have or Not in SubDepartments Table
             var subdepartment = _context.SubDepartments.Where(e => e.Id == id);
-
+            
             var employee = _context.Employees.Where(e => e.Sub_Dept_Id == id);
 
             ////Creating Objects for Json Returns
@@ -259,9 +259,10 @@ namespace Server.Controllers
                 {
                     //There is no Foreign Key Constraint in Employee Table
                     // Deleting Row data with Client Update Data
+                    //SubDepartment subdepartment1 =(SubDepartment)subdepartment;
                     var subdeptdata = new SubDepartment();
                     subdeptdata.Id = id;
-                    subdeptdata.Name = name;
+                   // subdeptdata.Name = subdepartment1.Name;
                     subdeptdata.Dept_Id = Dept_Id;
                     subdeptdata.Is_Active = 0;
                     subdeptdata.ts = DateTime.Now;
