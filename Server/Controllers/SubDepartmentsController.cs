@@ -229,8 +229,8 @@ namespace Server.Controllers
             //Accepting data from 
             var arr = JObject.Parse(paramList);
            // string name = (string)arr["Name"];
-            int id = (int)arr["Id"];
-            int Dept_Id = (int)arr["Dept_Id"];
+            long id = (long)arr["Id"];
+            //int Dept_Id = (int)arr["Dept_Id"];
 
             //Checking Data Have or Not in SubDepartments Table
             var subdepartment = _context.SubDepartments.Where(e => e.Id == id);
@@ -259,11 +259,18 @@ namespace Server.Controllers
                 {
                     //There is no Foreign Key Constraint in Employee Table
                     // Deleting Row data with Client Update Data
-                    //SubDepartment subdepartment1 =(SubDepartment)subdepartment;
+
+                    List<SubDepartment> subdptlist = new List<SubDepartment>();
+                    var data1 = from s in _context.SubDepartments
+                                where s.Id == id && s.Is_Active == 1
+                                select s;
+                    subdptlist = data1.ToList<SubDepartment>();
+                    SubDepartment subdata = new SubDepartment();
+                    subdata = subdptlist[0];
                     var subdeptdata = new SubDepartment();
                     subdeptdata.Id = id;
-                   // subdeptdata.Name = subdepartment1.Name;
-                    subdeptdata.Dept_Id = Dept_Id;
+                    subdeptdata.Name = subdeptdata.Name;
+                    subdeptdata.Dept_Id = subdeptdata.Dept_Id;
                     subdeptdata.Is_Active = 0;
                     subdeptdata.ts = DateTime.Now;
 
