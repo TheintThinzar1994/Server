@@ -17,11 +17,12 @@ namespace Server.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private EmployeeService _employeeservice;     
+        private IEmployeeService _employeeservice;     
 
-        public EmployeesController(ApplicationContext context)
+        public EmployeesController(ApplicationContext context, IEmployeeService employeeService)
         {
             _context = context;
+            _employeeservice = employeeService;
         }
 
         // GET: api/Employees
@@ -224,7 +225,7 @@ namespace Server.Controllers
 
 
             //Checking Duplicate Records in Sub Departments by SSM
-            var emp_var = _context.Employees.Where(e =>  e.Id==Id);
+            var emp_var = _context.Employees.Where(e =>  e.Id==Id && e.isActive==true);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();

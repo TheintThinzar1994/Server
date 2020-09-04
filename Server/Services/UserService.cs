@@ -150,10 +150,9 @@ namespace Server.Services
            
             var data = (from user in _context.Users
                         join role in _context.Roles on user.Role_ID equals role.Id
-                        join e in _context.Employees.DefaultIfEmpty() on user.Id equals e.Id
                         where EF.Functions.Like(user.Id.ToString(), userid) && user.isActive == true
                         select new { user.Id,user.User_Name,user.Password,user.Created_Date,user.Updated_Date,
-                            Emp_Id=e.Id,Emp_Name=e.User_Name,user.Role_ID,RoleName=role.Name});
+                            user.Role_ID,RoleName=role.Name});
             
             List<object> userresult = data.ToList<object>();
             return userresult;
