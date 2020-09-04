@@ -130,7 +130,7 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateUser")]
         public string UpdateUser(string paramList)
         {
