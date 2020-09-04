@@ -17,11 +17,12 @@ namespace Server.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private EmployeeService _employeeservice;     
+        private IEmployeeService _employeeservice;     
 
-        public EmployeesController(ApplicationContext context)
+        public EmployeesController(ApplicationContext context, IEmployeeService employeeService)
         {
             _context = context;
+            _employeeservice = employeeService;
         }
 
         // GET: api/Employees
