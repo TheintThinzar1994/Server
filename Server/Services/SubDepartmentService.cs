@@ -63,6 +63,8 @@ namespace Server.Services
             var updatesub = new SubDepartment()
             {
                 Id = subdata.Id,
+                Name=subdata.Name,
+                Dept_Id=subdata.Dept_Id,
                 Is_Active = subdata.Is_Active,
                 ts = subdata.ts
             };
