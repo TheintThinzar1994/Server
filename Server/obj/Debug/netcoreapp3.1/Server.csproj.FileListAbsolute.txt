@@ -628,6 +628,7 @@ D:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 D:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\Server\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
@@ -639,5 +640,3 @@ D:\Server\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
-D:\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
-D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig

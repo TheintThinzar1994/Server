@@ -13,7 +13,7 @@ namespace Server.Services
         List<object> getSubDepartment(string subdptid);
         SubDepartment CreateSubDepartment(SubDepartment subdptdata);
         SubDepartment UpdateSubDepartment(SubDepartment subdptdata);
-        Boolean DeleteSubDepartment(SubDepartment subdata);
+        Boolean DeleteSubDepartment(SubDepartment subdeptdata);
 
     }
     public class SubDepartmentService : ISubDepartmentService
@@ -57,33 +57,33 @@ namespace Server.Services
             _context.SaveChanges();
             return updatesubdpt;
         }
-        public Boolean DeleteSubDepartment(SubDepartment subdata)
+        public Boolean DeleteSubDepartment(SubDepartment subdeptdata)
         {
             Boolean retresult = true;
-            //var updatesub = new SubDepartment()
+            var updatesub = new SubDepartment()
+            {
+                Id = subdeptdata.Id,
+                Name= subdeptdata.Name,
+                Dept_Id= subdeptdata.Dept_Id,
+                Is_Active = subdeptdata.Is_Active,
+                ts = subdeptdata.ts
+            };
+            _context.SubDepartments.Update(updatesub);
+            _context.SaveChanges();
+            retresult = true;
+            //try
             //{
-            //    Id = subdata.Id,
-            //    Name=subdata.Name,
-            //    Dept_Id=subdata.Dept_Id,
-            //    Is_Active = subdata.Is_Active,
-            //    ts = subdata.ts
-            //};
-            try
-            {
-                _context.SubDepartments.Update(subdata);
-                _context.SaveChanges();
-                retresult = true;
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                throw new Exception("SubDepartment does not exist in the database");
-                retresult = false;
-            }
-            catch (Exception ex)
-            {
-                throw;
-                retresult = false;
-            }
+                
+            //}
+            //catch (DbUpdateConcurrencyException ex)
+            //{
+            //    throw new Exception("SubDepartment does not exist in the database");
+            //    retresult = false;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
             return retresult;
         }
     }
