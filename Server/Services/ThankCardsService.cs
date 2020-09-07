@@ -16,7 +16,7 @@ namespace Server.Services
         List<object> getEmployee(string dept_id, string sub_dept_id, string emp_id);
         ThankCard CreateThankCards(ThankCard thakcard);
         List<object> getGiveThankView(int id);
-        List<object> getGiveCardList(int to_emp_id, DateTime from_date, DateTime to_date);
+        List<object> getGiveCardList(string to_emp_id, DateTime from_date, DateTime to_date);
     }
     public class ThankCardsService : IThankCardsService
     {
@@ -118,9 +118,31 @@ namespace Server.Services
             retdata = data1.ToList<object>();
             return retdata;
         }
-        public List<object> getGiveCardList(int to_emp_id, DateTime from_date, DateTime to_date)
+        public List<object> getGiveCardList(string to_emp_id, DateTime from_date, DateTime to_date)
         {
             List<object> retdata = new List<object>();
+            DateTime f_date = Convert.ToDateTime(from_date.ToString("yyyy-MM-dd 00:00:00"));
+            DateTime t_date = Convert.ToDateTime(to_date.ToString("yyyy-MM-dd 23:59:59"));
+            //DateTime.Now.ToString("yyyy-MM-dd 00:00:00")
+            var data1 = from s in _context.ThankCards
+                        join femp in _context.Employees on s.From_Employee_Id equals femp.Id
+                        join temp in _context.Employees on s.To_Employee_Id equals temp.Id
+                        where EF.Functions.Like(s.To_Employee_Id.ToString(), to_emp_id) && s.isActive == true &&
+                        (s.SendDate>=f_date && s.SendDate<=t_date)
+                        select new
+                        {
+                            s.Id,
+                            s.From_Employee_Id,
+                            s.To_Employee_Id,
+                            From_Employee_Name = femp.User_Name,
+                            To_Employee_Name = temp.User_Name,
+                            s.Title,
+                            s.SendDate,
+                            s.SendText,
+                            s.ReplyDate,
+                            s.ReplyText,
+                            s.Status
+                        };
             return retdata;
 
         }
