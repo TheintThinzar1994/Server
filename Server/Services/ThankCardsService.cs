@@ -17,6 +17,8 @@ namespace Server.Services
         ThankCard CreateThankCards(ThankCard thakcard);
         List<object> getGiveThankView(int id);
         List<object> getGiveCardList(string to_emp_id, DateTime from_date, DateTime to_date);
+        List<object> getFromGiveCardListFromEmployee(string from_emp_id, DateTime from_date, DateTime to_date);
+
     }
     public class ThankCardsService : IThankCardsService
     {
@@ -124,27 +126,48 @@ namespace Server.Services
             DateTime f_date = Convert.ToDateTime(from_date.ToString("yyyy-MM-dd 00:00:00"));
             DateTime t_date = Convert.ToDateTime(to_date.ToString("yyyy-MM-dd 23:59:59"));
             //DateTime.Now.ToString("yyyy-MM-dd 00:00:00")
-            var data1 = from s in _context.ThankCards
-                        join femp in _context.Employees on s.From_Employee_Id equals femp.Id
-                        join temp in _context.Employees on s.To_Employee_Id equals temp.Id
-                        where EF.Functions.Like(s.To_Employee_Id.ToString(), to_emp_id) && s.isActive == true &&
-                        (s.SendDate>=f_date && s.SendDate<=t_date)
+            var data1 = from tc in _context.ThankCards
+                        join femp in _context.Employees on tc.From_Employee_Id equals femp.Id
+                        join temp in _context.Employees on tc.To_Employee_Id equals temp.Id
+                        join d in _context.Departments on temp.Dept_Id equals d.Id
+                        join sd in _context.SubDepartments on temp.Sub_Dept_Id equals sd.Id
+                        where EF.Functions.Like(tc.To_Employee_Id.ToString(), to_emp_id) && tc.isActive == true &&
+                        (tc.SendDate>=f_date && tc.SendDate<=t_date)
                         select new
                         {
-                            s.Id,
-                            s.From_Employee_Id,
-                            s.To_Employee_Id,
-                            From_Employee_Name = femp.User_Name,
-                            To_Employee_Name = temp.User_Name,
-                            s.Title,
-                            s.SendDate,
-                            s.SendText,
-                            s.ReplyDate,
-                            s.ReplyText,
-                            s.Status
+                            Emp_Name = temp.User_Name,
+                            Dept_Name = d.Name,
+                            Sub_Dept_Name = sd.Name,
+                            Date = tc.SendDate,
+                            Status = tc.Status
                         };
             return retdata;
 
         }
+        public List<object> getFromGiveCardListFromEmployee(string from_emp_id, DateTime from_date, DateTime to_date)
+        {
+            DateTime f_date = Convert.ToDateTime(from_date.ToString("yyyy-MM-dd 00:00:00"));
+            DateTime t_date = Convert.ToDateTime(to_date.ToString("yyyy-MM-dd 23:59:59"));
+            List<object> retdata = new List<object>();
+            var data = from tc in _context.ThankCards
+            join fe in _context.Employees on tc.From_Employee_Id equals fe.Id
+            join te in _context.Employees on tc.To_Employee_Id equals te.Id
+            join d in _context.Departments on fe.Dept_Id equals d.Id
+            join sd in _context.SubDepartments on fe.Sub_Dept_Id equals sd.Id
+            where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true &&
+            (tc.SendDate >= f_date && tc.SendDate <= t_date)
+                       select new
+                       {
+                           Emp_Name = fe.User_Name,
+                           Dept_Name = d.Name,
+                           Sub_Dept_Name = sd.Name,
+                           Date = tc.SendDate,
+                           Status = tc.Status
+                       };
+            return retdata;
+
+        }
+
+
     }
 }
