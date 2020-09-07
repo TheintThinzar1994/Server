@@ -157,7 +157,8 @@ namespace Server.Controllers
             int Role_Id = (int)arr["role_id"]; 
 
             //Checking Duplicate Records in Users by SSM
-            var user = _context.Users.Where(e => e.User_Name == name && e.isActive==true);
+            //add new user id check by SNH
+            var user = _context.Users.Where(e => e.User_Name == name && e.isActive==true && e.Id !=Id);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
