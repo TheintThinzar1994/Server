@@ -124,7 +124,7 @@ namespace Server.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("UpdateEmployee")]
         public string UpdateEmployee(string paramList)
         {
@@ -163,9 +163,9 @@ namespace Server.Controllers
                 // Checking Data Have in Database or Not (Before Updating)
                 emp_var = _context.Employees.Where(e =>  e.Id==Id);
                 // There is No Data To Update
-                if(emp_var.Count()<0)
+                if(emp_var.Count()<=0)
                 {
-                    retdata.statuscode = "406";
+                    retdata.statuscode = "304";
                     retdata.status = "There is no Data To Update";
                     returnstatus.Add(retdata);
                     result["status"] = returnstatus;

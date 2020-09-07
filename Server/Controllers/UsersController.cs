@@ -438,7 +438,7 @@ namespace Server.Controllers
             roleData.ts = DateTime.Now;
 
             //Checking Duplicate Records in Sub Departments by SSM
-            var duprole = _context.Roles.Where(e => e.Name == name && e.isActive == true);
+            var duprole = _context.Roles.Where(e => e.Name == name && e.isActive == true && e.Id !=id);
 
             //Check Data already have in database or not 
             var role = _context.Roles.Where(e => e.Id == roleData.Id);
