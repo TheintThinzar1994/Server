@@ -200,8 +200,12 @@ namespace Server.Services
             //};
             _context.Users.Update(userdata);
             _context.SaveChanges();
-            var userdata1 = (User)_context.Users.Where(e => e.Id == userdata.Id);
-            return userdata1;
+            //User userdata1 = (User)_context.Users.Where(e => e.Id == userdata.Id);
+            var data = from user in _context.Users
+                       where user.Id == userdata.Id && user.isActive == false
+                       select user;
+            List<User> users = data.ToList<User>();
+            return users[0];
         }
     }
 

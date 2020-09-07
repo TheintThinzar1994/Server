@@ -46,8 +46,11 @@ namespace Server.Services
         {            
             _context.Employees.Update(empupdate);
             _context.SaveChanges();
-            Employee empobj = (Employee)_context.Employees.Where(e => e.Id == empupdate.Id);
-            return empupdate;
+            var data = from employee in _context.Employees
+                       where employee.Id == empupdate.Id && empupdate.isActive == true
+                       select employee;
+            List<Employee> employees = data.ToList<Employee>();
+            return employees[0];
         }
     }
 }
