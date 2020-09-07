@@ -17,9 +17,9 @@ namespace Server.Controllers
     public class ThankCardsController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private ThankCardsService _thankcardservice;
+        private IThankCardsService _thankcardservice; // fix the service
 
-        public ThankCardsController(ApplicationContext context,ThankCardsService thankcardservice)
+        public ThankCardsController(ApplicationContext context, IThankCardsService thankcardservice)
         {
             _context = context;
             _thankcardservice = thankcardservice;
