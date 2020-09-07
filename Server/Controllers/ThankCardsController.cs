@@ -17,7 +17,7 @@ namespace Server.Controllers
     public class ThankCardsController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private IThankCardsService _thankcardservice; // fix the service
+        private IThankCardsService _thankcardservice; // fix the service by ttzh
 
         public ThankCardsController(ApplicationContext context, IThankCardsService thankcardservice)
         {
@@ -295,6 +295,7 @@ namespace Server.Controllers
 
             return JsonConvert.SerializeObject(result);
         }
+
         private bool ThankCardExists(long? id)
         {
             return _context.ThankCards.Any(e => e.Id == id);
