@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Server\\Server\\Server.csproj": {}
+    "D:\\Team3ST\\Server\\Server.csproj": {}
   },
   "projects": {
-    "D:\\Server\\Server\\Server.csproj": {
+    "D:\\Team3ST\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "D:\\Team3ST\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "D:\\Server\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\Server\\Server\\obj\\",
+        "projectPath": "D:\\Team3ST\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
+        "outputPath": "D:\\Team3ST\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -65,6 +65,10 @@
             "Microsoft.NETCore": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.2.8, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
