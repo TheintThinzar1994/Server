@@ -328,7 +328,7 @@ namespace Server.Controllers
         
         [HttpGet]
         [Route("ThankCardsFemp")] // Home Page List By TTZH
-        public string getGiveCardFromEmployeeList(string paramList)
+        public string   getGiveCardFromEmployeeList(string paramList)
         {
             //Accepting data from             
             var arr = JObject.Parse(paramList);
