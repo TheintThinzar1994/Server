@@ -38,6 +38,7 @@ namespace Server
             services.AddScoped<ISubDepartmentService, SubDepartmentService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IThankCardsService, ThankCardsService>();
+            services.AddScoped<IReportService, ReportService>();
 
         }
 
