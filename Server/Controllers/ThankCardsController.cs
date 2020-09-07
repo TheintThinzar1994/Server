@@ -325,6 +325,37 @@ namespace Server.Controllers
 
             return JsonConvert.SerializeObject(result);
         }
+        
+        [HttpGet]
+        [Route("ThankCardsFemp")] // Home Page List By TTZH
+        public string getGiveCardFromEmployeeList(string paramList)
+        {
+            //Accepting data from             
+            var arr = JObject.Parse(paramList);
+            string from_emp_id = (string)arr["from_emp_id"];
+            DateTime from_date = (DateTime)arr["from_date"];
+            DateTime to_date = (DateTime)arr["to_date"];
+
+            ////Creating Objects for Json Returns
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+
+            //Getting Table Results from the Database
+
+            List<object> thankcard = _thankcardservice.getFromGiveCardListFromEmployee(from_emp_id, from_date, to_date);
+
+            //Return Updated Result to Client with JSON format
+            returndata.Add(thankcard);
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            result["status"] = returnstatus;
+            result["thankcard"] = returndata;
+
+            return JsonConvert.SerializeObject(result);
+        }
         private bool ThankCardExists(long? id)
         {
             return _context.ThankCards.Any(e => e.Id == id);
