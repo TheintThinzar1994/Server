@@ -82,14 +82,14 @@ namespace Server.Controllers
             departData.Is_Active = true;
             departData.ts = DateTime.Now;
 
-            var department = _context.Departments.Where(e => e.Id == departData.Id && e.Name == departData.Name);
+            var department = _context.Departments.Where(e => e.Id != departData.Id && e.Name == departData.Name);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
-            if (department.Count() > 0)
+            if (department.Count() <= 0)
             {
                 var deptdata = new Department();
                 deptdata.Id = id;
@@ -190,7 +190,7 @@ namespace Server.Controllers
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
-            if (department.Count() > 0)
+            if (department.Count() <= 0)
             {
                 retdata.statuscode = "400";
                 retdata.status = "Bad Request";
