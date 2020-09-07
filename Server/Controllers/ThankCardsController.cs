@@ -136,7 +136,7 @@ namespace Server.Controllers
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
-                result["subdepartment"] = returndata;
+                result["thankcards"] = returndata;
             }
             else
             {
@@ -145,7 +145,7 @@ namespace Server.Controllers
                 retdata.status = "No Data To Update";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
-                result["subdepartment"] = returndata;
+                result["thankcards"] = returndata;
             }
             return JsonConvert.SerializeObject(result);
         }
@@ -182,7 +182,7 @@ namespace Server.Controllers
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
-                result["subdepartment"] = returndata;
+                result["thankcards"] = returndata;
             }
             else
             {
@@ -191,8 +191,108 @@ namespace Server.Controllers
                 retdata.status = "No Data To Update";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
-                result["subdepartment"] = returndata;
+                result["thankcards"] = returndata;
             }
+            return JsonConvert.SerializeObject(result);
+        }
+        [HttpGet]
+        [Route("GetEmployee")]
+        public string getThankCardEmployee(string paramList)
+        {
+            //Accepting data from 
+            var arr = JObject.Parse(paramList);
+            string emp_id = (string)arr["emp_id"];
+            string dept_id = (string)arr["dept_id"];
+            string sub_dept_id = (string)arr["sub_dept_id"];           
+
+            ////Creating Objects for Json Returns
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+
+            //Getting Table Results from the Database
+
+            List<object> emplist = _thankcardservice.getEmployee(dept_id,sub_dept_id,emp_id);
+
+            //Return Updated Result to Client with JSON format
+            returndata.Add(emplist);
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            result["status"] = returnstatus;
+            result["emplist"] = returndata;
+            
+            return JsonConvert.SerializeObject(result);
+        }
+        [HttpPost]
+        [Route("ThankCard")]
+        public string InsertThankCard(string paramList)
+        {
+            var arr = JObject.Parse(paramList);
+            int from_emp_id = (int)arr["from_emp_id"];
+            int to_emp_id = (int)arr["to_emp_id"];
+            string title = (string)arr["title"];
+            string send_text = (string)arr["send_text"];
+            string status = (string)arr["status"];
+            
+
+            //Creating Objects for Json Returns
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+           
+            //Accepting data comming from Client(PHP)
+            ThankCard thankCard = new ThankCard();
+            thankCard.From_Employee_Id = from_emp_id;
+            thankCard.To_Employee_Id = to_emp_id;
+            thankCard.Title = title;
+            thankCard.SendText = send_text;
+            thankCard.SendDate = DateTime.Now;
+            thankCard.ReplyDate = DateTime.Now;
+            thankCard.ReplyText = "";
+            thankCard.Status = "Delivered";
+            thankCard.ts = DateTime.Now;
+            thankCard.isActive = true;            
+            //Inserting data into tables
+            ThankCard thankcardresult = _thankcardservice.CreateThankCards(thankCard);
+            returndata.Add(thankcardresult);
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            result["status"] = returnstatus;
+            result["thankcard"] = returndata;
+
+        return JsonConvert.SerializeObject(result);
+
+        }
+        [HttpGet]
+        [Route("GetGiveCard")]
+        public string getGiveCardToView(string paramList)
+        {
+            //Accepting data from 
+            var arr = JObject.Parse(paramList);
+            int Id = (int)arr["id"];
+
+            ////Creating Objects for Json Returns
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+
+            //Getting Table Results from the Database
+
+            List<object> thankcard = _thankcardservice.getGiveThankView(Id);
+
+            //Return Updated Result to Client with JSON format
+            returndata.Add(thankcard);
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            result["status"] = returnstatus;
+            result["thankcard"] = returndata;
+
             return JsonConvert.SerializeObject(result);
         }
         private bool ThankCardExists(long? id)
