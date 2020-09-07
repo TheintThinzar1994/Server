@@ -17,7 +17,7 @@ namespace Server.Controllers
     public class SubDepartmentsController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private ISubDepartmentService _subdeptservice;
+        private ISubDepartmentService _subdeptservice; // fix the service 
 
         public SubDepartmentsController(ApplicationContext context, ISubDepartmentService subdepartservice)
         {
