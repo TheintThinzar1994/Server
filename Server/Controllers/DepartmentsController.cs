@@ -126,7 +126,8 @@ namespace Server.Controllers
         {
             // var user = await _context.Users.FindAsync(id);
             var arr = JObject.Parse(paramList);
-            string deptName = (string)arr["Name"];
+            //edit arr['Name'] to arr['departName'] by snh
+            string deptName = (string)arr["departName"];
             //int dept_Id = (int)arr["Dept_Id"];
 
             var deptData = new Department();

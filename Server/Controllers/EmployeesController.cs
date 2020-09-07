@@ -136,12 +136,13 @@ namespace Server.Controllers
             int user_id = (int)arr["User_Id"];
             string address = (string)arr["Address"];
             string email = (string)arr["email"];
-            int phone = (int)arr["phone"];
+            string phone = (string)arr["phone"];
             string photoname = (string)arr["photoname"];
             
 
             //Checking Duplicate Records in Sub Departments by SSM
-            var emp_var = _context.Employees.Where(e => e.User_Name == name && e.Dept_Id == dept_id && e.Sub_Dept_Id==sub_dept_id);
+            //add new id check by snh
+            var emp_var = _context.Employees.Where(e => e.User_Name == name && e.Dept_Id == dept_id && e.Sub_Dept_Id==sub_dept_id && e.Id !=Id);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -290,7 +291,7 @@ namespace Server.Controllers
             int user_id = (int)arr["User_Id"];
             string address = (string)arr["Address"];
             string email = (string)arr["email"];
-            int phone = (int)arr["phone"];
+            string phone = (string)arr["phone"];
             string photoname = (string)arr["photoname"];
 
 

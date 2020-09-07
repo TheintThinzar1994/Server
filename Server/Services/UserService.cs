@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.CodeAnalysis.Differencing;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Server.Helpers;
 using Server.Model;
 using System;
@@ -182,8 +184,9 @@ namespace Server.Services
             };
             _context.Users.Update(updateuser);
             _context.SaveChanges();
-            var userdata1 = (User) _context.Users.Where(e => e.Id == userdata.Id);
-            return userdata1;
+             //comment by snh
+            //var userdata1 = (User) _context.Users.Where(e => e.Id == userdata.Id);
+            return updateuser;
         }
         public User DeleteUser(User userdata)
         {

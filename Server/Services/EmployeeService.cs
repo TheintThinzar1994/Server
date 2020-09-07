@@ -46,8 +46,9 @@ namespace Server.Services
         {            
             _context.Employees.Update(empupdate);
             _context.SaveChanges();
+            //edit isActive check by snh
             var data = from employee in _context.Employees
-                       where employee.Id == empupdate.Id && empupdate.isActive == true
+                       where employee.Id == empupdate.Id && employee.isActive == empupdate.isActive
                        select employee;
             List<Employee> employees = data.ToList<Employee>();
             return employees[0];
