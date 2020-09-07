@@ -141,6 +141,7 @@ namespace Server.Services
                             Date = tc.SendDate,
                             Status = tc.Status
                         };
+            retdata = data1.ToList<object>();
             return retdata;
 
         }
@@ -164,6 +165,7 @@ namespace Server.Services
                            Date = tc.SendDate,
                            Status = tc.Status
                        };
+            retdata = data.ToList<object>();
             return retdata;
 
         }
