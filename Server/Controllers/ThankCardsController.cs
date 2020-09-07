@@ -107,7 +107,7 @@ namespace Server.Controllers
         }
         [HttpPut]
         [Route("UpdateView")]
-        public string UpdateSubDepartment(string paramList)
+        public string UpdateThankCardView(string paramList)
         {
             //Accepting data from 
             var arr = JObject.Parse(paramList);
@@ -129,6 +129,52 @@ namespace Server.Controllers
                 // Updating Row data with Client Update Data
 
                 List<object> thankcardlist = _thankcardservice.updateThankCardView(id,status);
+
+                //Return Updated Result to Client with JSON format
+                returndata.Add(thankcardlist);
+                retdata.statuscode = "200";
+                retdata.status = "Success";
+                returnstatus.Add(retdata);
+                result["status"] = returnstatus;
+                result["subdepartment"] = returndata;
+            }
+            else
+            {
+                // There is no data to update
+                retdata.statuscode = "304";
+                retdata.status = "No Data To Update";
+                returnstatus.Add(retdata);
+                result["status"] = returnstatus;
+                result["subdepartment"] = returndata;
+            }
+            return JsonConvert.SerializeObject(result);
+        }
+
+        [HttpPut]
+        [Route("UpdateReply")]
+        public string UpdateThankCardReply(string paramList)
+        {
+            //Accepting data from 
+            var arr = JObject.Parse(paramList);
+            int id = (int)arr["Id"];
+            string status = (string)arr["status"];
+            string reply_text = (string)arr["reply"];
+
+            //Checking Data Have or Not in ThanksCards Table
+            var thankcards = _context.ThankCards.Where(e => e.Id == id && e.isActive == true);
+
+            ////Creating Objects for Json Returns
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+
+            //Checking Data Have or Not in ThankCards Table
+            if (thankcards.Count() > 0)
+            {
+                // Updating Row data with Client Update Data
+
+                List<object> thankcardlist = _thankcardservice.updateThankCardReply(id, status, reply_text);
 
                 //Return Updated Result to Client with JSON format
                 returndata.Add(thankcardlist);
