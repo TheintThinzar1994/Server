@@ -12,6 +12,7 @@ namespace Server.Services
         List<object> getEmployee(string subdptid);
         Employee CreateEmployee(Employee empdata);
         Employee UpdateEmployee(Employee empupdate);
+       List<object> getEmployeeByUser(string user_id);
     }
     public class EmployeeService : IEmployeeService
     {
@@ -32,6 +33,35 @@ namespace Server.Services
                         select new { Emp_Id=e.Id,Emp_Name=e.User_Name,Sub_Dept_Id=sd.Id,Sub_Dept_Name=sd.Name,
                         Dept_Id=d.Id,Dept_Name=d.Name,User_Id=u.Id,User_Name=u.User_Name,e.Address,e.Email,e.Phone,e.PhotoName,
                         e.Created_Date,e.End_Date
+                        };
+            emplist = data1.ToList<object>();
+            return emplist;
+        }
+
+        public List<object> getEmployeeByUser(string user_name)
+        {
+            List<object> emplist = new List<object>();
+            var data1 = from e in _context.Employees
+                        join d in _context.Departments on e.Dept_Id equals d.Id
+                        join sd in _context.SubDepartments on e.Sub_Dept_Id equals sd.Id
+                        join u in _context.Users on e.User_Id equals u.Id
+                        where EF.Functions.Like(u.User_Name.ToString(), user_name) && e.isActive == true
+                        select new
+                        {
+                            Emp_Id = e.Id,
+                            Emp_Name = e.User_Name,
+                            Sub_Dept_Id = sd.Id,
+                            Sub_Dept_Name = sd.Name,
+                            Dept_Id = d.Id,
+                            Dept_Name = d.Name,
+                            User_Id = u.Id,
+                            User_Name = u.User_Name,
+                            e.Address,
+                            e.Email,
+                            e.Phone,
+                            e.PhotoName,
+                            e.Created_Date,
+                            e.End_Date
                         };
             emplist = data1.ToList<object>();
             return emplist;

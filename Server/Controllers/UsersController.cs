@@ -318,6 +318,7 @@ namespace Server.Controllers
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
             List<object> returndata = new List<object>();
+            List<object> returnEmpdata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
             if (user.Count() > 0)
@@ -326,8 +327,10 @@ namespace Server.Controllers
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
                 returndata = _userService.getData(name, "1234");
+                returnEmpdata = _empService.getEmployeeByUser(name);
                 result["status"] = returnstatus;
                 result["menu"] = returndata;
+                result["emp"] = returnEmpdata;
                 //result["message"] = "Success";
             }
             else

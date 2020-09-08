@@ -641,3 +641,4 @@ D:\Server\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig

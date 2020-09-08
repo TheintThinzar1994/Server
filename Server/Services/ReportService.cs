@@ -16,6 +16,7 @@ namespace Server.Services
         List<object> getThankCardTotalByEmployeeView(string dept_id, string sub_dept_id, DateTime fdate, DateTime tdate, string to_emp_id, string order);
         List<object> getSentThankCardTotalByEmployee(string dept_id, string sub_dept_id, DateTime fdate, DateTime tdate, string from_emp_id, string order);
         List<object> getSentThankCardTotalByEmployeeView(string dept_id, string sub_dept_id, DateTime fdate, DateTime tdate, string from_emp_id, string order);
+        List<object> getThankCardTotalByDeparmentRelation(string from_dept_id, string to_dept_id, DateTime fdate, DateTime tdate, string order);
     }
 
     public class ReportService : IReportService
@@ -314,7 +315,7 @@ namespace Server.Services
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
-                            && EF.Functions.Like(t.To_Employee_Id.ToString(), from_emp_id)
+                            && EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)
                             select new { Dept_Name = d.Name, Sub_Dept_Name = s.Name, Emp_Name = e.User_Name } into result
                             group result by new { result.Dept_Name, result.Sub_Dept_Name, result.Emp_Name } into g
                             select new
@@ -346,7 +347,7 @@ namespace Server.Services
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
-                            && EF.Functions.Like(t.To_Employee_Id.ToString(), from_emp_id)
+                            && EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)
                             select new { Dept_Name = d.Name, Sub_Dept_Name = s.Name, Emp_Name = e.User_Name } into result
                             group result by new { result.Dept_Name, result.Sub_Dept_Name, result.Emp_Name } into g
                             select new
@@ -505,6 +506,76 @@ namespace Server.Services
             return emplist;
         }
 
+        //Get Received ThankCard Total By Department -SSM 08/09/2020
+        public List<object> getThankCardTotalByDeparmentRelation(string from_dept_id, string to_dept_id, DateTime fdate, DateTime tdate, string order)
+        {
+            DateTime f_date = Convert.ToDateTime(fdate.ToString("yyyy-MM-dd 00:00:00"));
+            DateTime t_date = Convert.ToDateTime(tdate.ToString("yyyy-MM-dd 23:59:59"));
+            List<object> emplist = new List<object>();
+
+            if (order.ToLower() == "Desc".ToLower())
+            {
+                var data1 = from t in _context.ThankCards
+                            join fe in _context.Employees on t.From_Employee_Id equals fe.Id
+                            join te in _context.Employees on t.From_Employee_Id equals te.Id
+                            join fd in _context.Departments on fe.Dept_Id equals fd.Id
+                            join td in _context.Departments on te.Dept_Id equals td.Id
+                            where EF.Functions.Like(fd.Id.ToString(), from_dept_id) && t.isActive == true
+                            && EF.Functions.Like(td.Id.ToString(), to_dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
+                            select new { From_Dept_Name = fd.Name, To_Dept_Name = td.Name } into result
+                            group result by new { result.From_Dept_Name, result.To_Dept_Name } into g
+                            select new
+                            {
+                                F_Dept_Name = g.Key.From_Dept_Name,
+                                T_Dept_Name = g.Key.To_Dept_Name,
+                                CountResult = g.Count()
+                            } into resultcount
+                            orderby resultcount.CountResult descending
+                            select new
+                            {
+                                resultcount.F_Dept_Name,
+                                resultcount.T_Dept_Name,
+                                resultcount.CountResult,
+                                f_date,
+                                t_date
+                            }
+                          ;
+                emplist = data1.ToList<object>();
+            }
+
+            else
+            {
+                var data1 = from t in _context.ThankCards
+                            join fe in _context.Employees on t.From_Employee_Id equals fe.Id
+                            join te in _context.Employees on t.From_Employee_Id equals te.Id
+                            join fd in _context.Departments on fe.Dept_Id equals fd.Id
+                            join td in _context.Departments on te.Dept_Id equals td.Id
+                            where EF.Functions.Like(fd.Id.ToString(), from_dept_id) && t.isActive == true
+                            && EF.Functions.Like(td.Id.ToString(), to_dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
+                            select new { From_Dept_Name = fd.Name, To_Dept_Name = td.Name } into result
+                            group result by new { result.From_Dept_Name, result.To_Dept_Name } into g
+                            select new
+                            {
+                                F_Dept_Name = g.Key.From_Dept_Name,
+                                T_Dept_Name = g.Key.To_Dept_Name,
+                                CountResult = g.Count()
+                            } into resultcount
+                            orderby resultcount.CountResult ascending
+                            select new
+                            {
+                                resultcount.F_Dept_Name,
+                                resultcount.T_Dept_Name,
+                                resultcount.CountResult,
+                                f_date,
+                                t_date
+                            }
+                          ;
+                emplist = data1.ToList<object>();
+            }
+
+
+            return emplist;
+        }
 
     }
 }
