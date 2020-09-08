@@ -467,7 +467,6 @@ C:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 C:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
 C:\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
 C:\Server\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
 C:\Server\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
@@ -479,3 +478,4 @@ C:\Server\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.
 C:\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 C:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 C:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+C:\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache

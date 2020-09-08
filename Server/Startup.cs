@@ -34,7 +34,7 @@ namespace Server
          
             services.AddDbContext<ApplicationContext>(opt =>
             {
-                opt.UseNpgsql("ApplicationContext");
+                opt.UseNpgsql(Configuration.GetConnectionString("ApplicationContext"));
             });
             services.AddScoped<IUserService, UserService>();
         }

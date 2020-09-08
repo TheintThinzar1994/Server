@@ -101,6 +101,19 @@ namespace Server.Controllers
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
+            try
+            {
+                if (user.Count() > 0)
+                {
+                    retdata.statuscode = "200";
+                    retdata.status = "Success";
+                    returnstatus.Add(retdata);
+                }
+            }
+            catch(ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             if (user.Count() > 0)
             {
                 retdata.statuscode = "200";
