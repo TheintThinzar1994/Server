@@ -163,7 +163,8 @@ namespace Server.Services
                            Dept_Name = d.Name,
                            Sub_Dept_Name = sd.Name,
                            Date = tc.SendDate,
-                           Status = tc.Status
+                           Status = tc.Status,
+                           Id =tc.Id
                        };
             retdata = data.ToList<object>();
             return retdata;
