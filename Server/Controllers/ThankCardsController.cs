@@ -120,6 +120,7 @@ namespace Server.Controllers
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
             List<object> returndata = new List<object>();
+            List<object> empreturndata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
 
@@ -128,7 +129,16 @@ namespace Server.Controllers
             {
                 // Updating Row data with Client Update Data
 
-                List<object> thankcardlist = _thankcardservice.updateThankCardView(id,status);
+                List<ThankCard> thankcardlist = _thankcardservice.updateThankCardView(id,status);
+                if (thankcardlist.Count() > 0)
+                {
+                    ThankCard objcard = new ThankCard();
+                    objcard = (ThankCard)thankcardlist[0];
+                    List<object> fromempdata = _thankcardservice.getEmployee("%", "%", objcard.From_Employee_Id.ToString());
+                    empreturndata.Add(fromempdata);
+                    result["fromEmpData"] = empreturndata;
+                }
+
 
                 //Return Updated Result to Client with JSON format
                 returndata.Add(thankcardlist);

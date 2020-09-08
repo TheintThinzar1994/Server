@@ -10,7 +10,7 @@ namespace Server.Services
 {
     public interface IThankCardsService
     {
-        List<object> updateThankCardView(int id, string status);
+        List<ThankCard> updateThankCardView(int id, string status);
         List<object> updateThankCardReply(int id, string status, string reply);
 
         List<object> getEmployee(string dept_id, string sub_dept_id, string emp_id);
@@ -35,7 +35,7 @@ namespace Server.Services
             _context.SaveChanges();
             return thakcard;
         }
-        public List<object> updateThankCardView(int id,string status)
+        public List<ThankCard> updateThankCardView(int id,string status)
         {
             List<ThankCard> thankcard = new List<ThankCard>();
             var data1 = from s in _context.ThankCards
@@ -52,10 +52,13 @@ namespace Server.Services
                 _context.ThankCards.Update(objthank);
                 _context.SaveChanges();
             }
+            
             data1 = from s in _context.ThankCards
+                   // join e in _context.Employees on s.From_Employee_Id equals e.Id
                     where s.Id == id && s.isActive == true
                     select s;
-           List<object> ret_thankcard = data1.ToList<object>();
+
+            List<ThankCard> ret_thankcard = data1.ToList<ThankCard>();
             return ret_thankcard;
         }
         public List<object> updateThankCardReply(int id, string status,string reply)
