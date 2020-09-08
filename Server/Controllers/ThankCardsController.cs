@@ -130,6 +130,8 @@ namespace Server.Controllers
                 // Updating Row data with Client Update Data
 
                 List<ThankCard> thankcardlist = _thankcardservice.updateThankCardView(id,status);
+
+                // list employee data
                 if (thankcardlist.Count() > 0)
                 {
                     ThankCard objcard = new ThankCard();
@@ -176,6 +178,7 @@ namespace Server.Controllers
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
             List<object> returndata = new List<object>();
+            List<object> emprdata = new List<object>();
             List<object> returnstatus = new List<object>();
             ReturnData retdata = new ReturnData();
 
@@ -185,6 +188,15 @@ namespace Server.Controllers
                 // Updating Row data with Client Update Data
 
                 List<object> thankcardlist = _thankcardservice.updateThankCardReply(id, status, reply_text);
+                // Get employee data from Employee
+                if (thankcardlist.Count() > 0)
+                {
+                    ThankCard objcard1 = new ThankCard();
+                    objcard1 = (ThankCard)thankcardlist[0];
+                    List<object> fromempdata1 = _thankcardservice.getEmployee("%", "%", objcard1.From_Employee_Id.ToString());
+                    emprdata.Add(fromempdata1);
+                    result["fromEmpData"] = emprdata;
+                }
 
                 //Return Updated Result to Client with JSON format
                 returndata.Add(thankcardlist);

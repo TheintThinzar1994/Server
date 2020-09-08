@@ -99,10 +99,12 @@ namespace Server.Services
                         {
                             emp_id = e.Id,
                             emp_name = e.User_Name,
+                            emp_photoName = e.PhotoName,
                             sub_dept_id = s.Id,
                             sub_dept_name = s.Name,
                             dept_id = d.Id,
                             dept_name = d.Name
+
                         };
             emplist = data1.ToList<object>();
             return emplist;
@@ -173,7 +175,8 @@ namespace Server.Services
                            Dept_Name = d.Name,
                            Sub_Dept_Name = sd.Name,
                            Date = tc.SendDate,
-                           Status = tc.Status
+                           Status = tc.Status,
+                           Id =tc.Id
                        };
             retdata = data.ToList<object>();
             return retdata;
