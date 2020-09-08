@@ -30,7 +30,7 @@ namespace Server.Model
 
         public string Email { get; set; }
 
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         public string PhotoName { get; set; }
 
         public DateTime Created_Date { get; set; }

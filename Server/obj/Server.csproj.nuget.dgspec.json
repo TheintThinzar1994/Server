@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Server\\Server\\Server.csproj": {}
+    "D:\\Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "C:\\Server\\Server\\Server.csproj": {
+    "D:\\Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Server\\Server\\Server.csproj",
+        "projectUniqueName": "D:\\Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "C:\\Server\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Server\\Server\\obj\\",
+        "projectPath": "D:\\Server\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "D:\\Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -42,6 +42,12 @@
               "target": "Package",
               "version": "[5.2.7, )"
             },
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.7, )"
@@ -56,6 +62,14 @@
               "target": "Package",
               "version": "[3.1.7, )"
             },
+            "Microsoft.NETCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.2.8, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[3.1.4, )"
@@ -63,6 +77,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "Newtonsoft.Json.Bson": {
+              "target": "Package",
+              "version": "[1.0.2, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",

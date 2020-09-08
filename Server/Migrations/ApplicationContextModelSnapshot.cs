@@ -62,8 +62,8 @@ namespace Server.Migrations
                     b.Property<DateTime>("End_Date")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("integer");
+                    b.Property<string>("Phone")
+                        .HasColumnType("string");
 
                     b.Property<string>("PhotoName")
                         .HasColumnType("text");
