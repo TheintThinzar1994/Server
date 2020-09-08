@@ -130,6 +130,14 @@ namespace Server.Controllers
 
                 List<object> thankcardlist = _thankcardservice.updateThankCardView(id,status);
 
+                //var employees = _context.Employees.Where(e => e.Id == id && e.isActive == true);
+                //if (employees.Count() > 0)
+                //{
+                //    List<object> employeelist = _thankcardservice.getEmployee(string dept_id, string sub_dept_id, string emp_id)
+                //}
+
+
+
                 //Return Updated Result to Client with JSON format
                 returndata.Add(thankcardlist);
                 retdata.statuscode = "200";

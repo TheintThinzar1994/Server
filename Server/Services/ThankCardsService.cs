@@ -52,10 +52,13 @@ namespace Server.Services
                 _context.ThankCards.Update(objthank);
                 _context.SaveChanges();
             }
+            
             data1 = from s in _context.ThankCards
+                   // join e in _context.Employees on s.From_Employee_Id equals e.Id
                     where s.Id == id && s.isActive == true
                     select s;
-           List<object> ret_thankcard = data1.ToList<object>();
+
+            List<object> ret_thankcard = data1.ToList<object>();
             return ret_thankcard;
         }
         public List<object> updateThankCardReply(int id, string status,string reply)
