@@ -37,6 +37,12 @@ namespace Server
                 opt.UseNpgsql(Configuration.GetConnectionString("ApplicationContext"));
             });
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<ISubDepartmentService, SubDepartmentService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ICommomService, CommonService>();
+            services.AddScoped<IThankCardsService, ThankCardsService>();
+            services.AddScoped<IReportService, ReportService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
