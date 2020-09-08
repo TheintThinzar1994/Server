@@ -517,11 +517,11 @@ namespace Server.Services
             {
                 var data1 = from t in _context.ThankCards
                             join fe in _context.Employees on t.From_Employee_Id equals fe.Id
-                            join te in _context.Employees on t.From_Employee_Id equals te.Id
+                            join te in _context.Employees on t.To_Employee_Id equals te.Id
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
                             join td in _context.Departments on te.Dept_Id equals td.Id
-                            where EF.Functions.Like(fd.Id.ToString(), from_dept_id) && t.isActive == true
-                            && EF.Functions.Like(td.Id.ToString(), to_dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
+                            where EF.Functions.Like(fe.Dept_Id.ToString(), from_dept_id) && t.isActive == true
+                            && EF.Functions.Like(te.Dept_Id.ToString(), to_dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             select new { From_Dept_Name = fd.Name, To_Dept_Name = td.Name } into result
                             group result by new { result.From_Dept_Name, result.To_Dept_Name } into g
                             select new
