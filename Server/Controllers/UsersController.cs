@@ -339,7 +339,7 @@ namespace Server.Controllers
                 retdata.statuscode = "200";
                 retdata.status = "Success";
                 returnstatus.Add(retdata);
-                returndata = _userService.getData(name, "1234");
+                returndata = _userService.getData(name, password);
                 returnEmpdata = _empService.getEmployeeByUser(name);
                 result["status"] = returnstatus;
                 result["menu"] = returndata;

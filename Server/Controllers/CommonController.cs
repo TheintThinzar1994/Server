@@ -19,12 +19,14 @@ namespace Server.Controllers
         private ISubDepartmentService _subdeptservice;
         private IDepartmentService _deptservice;
         private IUserService _userservice;
-        public CommonController(ApplicationContext context,ISubDepartmentService subdeptservice,IDepartmentService deptservice,IUserService userservice)
+        private ICommomService _commonservice;
+        public CommonController(ApplicationContext context,ISubDepartmentService subdeptservice,IDepartmentService deptservice,IUserService userservice, ICommomService commomservice)
         {
             _context = context;
             _subdeptservice = subdeptservice;
             _deptservice = deptservice;
             _userservice = userservice;
+            _commonservice = commomservice;
         }
 
         // GET: api/Common
@@ -120,7 +122,7 @@ namespace Server.Controllers
             returnstatus.Add(retdata);
             List<object> subdptlist = _subdeptservice.getSubDepartment("%");
             List<Department> dptlist = _deptservice.getDepartment("%");
-            List<object> userlist = _userservice.getUser("%");
+            List<object> userlist = _commonservice.getUserForEmployeeSetup("%");
             returndata.Add(dptlist);
             result["status"] = returnstatus;
             result["department"] = returndata;
