@@ -15,7 +15,7 @@ namespace Server.Services
         List<object> getEmployee(string subdptid);
         Employee CreateEmployee(Employee empdata);
         Employee UpdateEmployee(Employee empupdate);
-       List<object> getEmployeeByUser(string user_name);
+       List<object> getEmployeeByUser(string name);
     }
     public class EmployeeService : IEmployeeService
     {
@@ -41,16 +41,22 @@ namespace Server.Services
             return emplist;
         }
 
-        public List<object> getEmployeeByUser(string user_name)
+        public List<object> getEmployeeByUser(string name)
         {
             List<object> emplist = new List<object>();
-            var empdata = (from user in _context.Users
-                        join emp in _context.Employees on user.Id equals emp.User_Id
-                        join dept in _context.Departments on emp.Dept_Id equals dept.Id
-                        join sub in _context.SubDepartments on emp.Sub_Dept_Id equals sub.Id
-                        join role in _context.Roles on user.Role_ID equals role.Id
-                        where EF.Functions.Like(user.User_Name.ToString(), user_name) && user.isActive == true                        
-                        select new
+            //var empdata = (from user in _context.Users
+            //            join emp in _context.Employees on user.Id equals emp.Id
+            //            join dept in _context.Departments on emp.Dept_Id equals dept.Id
+            //            join sub in _context.SubDepartments on emp.Sub_Dept_Id equals sub.Id
+            //            join role in _context.Roles on user.Role_ID equals role.Id
+            //            where EF.Functions.Like(user.User_Name.ToString(), name) && user.isActive == true 
+            var empdata = (from emp in _context.Employees
+            join user in _context.Users on emp.User_Id equals user.Id
+            join dept in _context.Departments on emp.Dept_Id equals dept.Id
+            join sub in _context.SubDepartments on emp.Sub_Dept_Id equals sub.Id
+            join role in _context.Roles on user.Role_ID equals role.Id
+            where EF.Functions.Like(user.User_Name.ToString(), name) && user.isActive == true
+            select new
                         {
                             user.Id,
                             user.User_Name,
@@ -77,31 +83,32 @@ namespace Server.Services
             //              join u in _context.Users on e.User_Id equals u.Id
             //              where EF.Functions.Like(u.User_Name.ToString(), user_name) && e.isActive == true
             //              select u;
-                          //select new
-                          //{
-                          //    Emp_Id = e.Id,
-                          //    Emp_Name = e.User_Name,
-                          //    Sub_Dept_Id = sd.Id,
-                          //    Sub_Dept_Name = sd.Name,
-                          //    Dept_Id = d.Id,
-                          //    Dept_Name = d.Name,
-                          //    User_Id = u.Id,
-                          //    User_Name = u.User_Name,
-                          //    e.Address,
-                          //    e.Email,
-                          //    e.PhotoName,
-                          //    e.Created_Date,
-                          //    e.End_Date
-                          //};
-            try
-            {
-                emplist = empdata.ToList<object>();
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            //select new
+            //{
+            //    Emp_Id = e.Id,
+            //    Emp_Name = e.User_Name,
+            //    Sub_Dept_Id = sd.Id,
+            //    Sub_Dept_Name = sd.Name,
+            //    Dept_Id = d.Id,
+            //    Dept_Name = d.Name,
+            //    User_Id = u.Id,
+            //    User_Name = u.User_Name,
+            //    e.Address,
+            //    e.Email,
+            //    e.PhotoName,
+            //    e.Created_Date,
+            //    e.End_Date
+            //};
+            //try
+            //{
+            emplist = empdata.ToList<object>();
             return emplist;
+            //}
+            //catch(Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+
         }
         public Employee CreateEmployee(Employee empdata)
         {
