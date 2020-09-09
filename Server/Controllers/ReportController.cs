@@ -280,6 +280,39 @@ namespace Server.Controllers
             return JsonConvert.SerializeObject(result);
         }
 
+        //Get Department Relationship ThankCard Total  -SSM 08/09/2020
+        [HttpGet]
+        [Route("GetThankCardTotalByDeptRelation")]
+        public string getThankCardDepartmentRelationship(string paramList)
+        {
+            //Accepting data from             
+            var arr = JObject.Parse(paramList);
+            string from_dept_id = (string)arr["from_dept_id"];
+            string to_dept_id = (string)arr["to_dept_id"];
+            DateTime from_date = (DateTime)arr["from_date"];
+            DateTime to_date = (DateTime)arr["to_date"];
+            string order = (string)arr["order"];
+
+            ////Creating Objects for Json Returns
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+
+            //Getting Table Results from the Database
+
+            List<object> thankcard = _reportservice.getThankCardTotalByDeparmentRelation(from_dept_id, to_dept_id, from_date, to_date, order);
+
+            //Return Updated Result to Client with JSON format
+            returndata.Add(thankcard);
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            result["status"] = returnstatus;
+            result["thankcard"] = returndata;
+
+            return JsonConvert.SerializeObject(result);
+        }
         private bool ThankCardExists(long? id)
         {
             return _context.ThankCards.Any(e => e.Id == id);

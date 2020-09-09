@@ -356,6 +356,7 @@ namespace Server.Controllers
             //Accepting data from             
             var arr = JObject.Parse(paramList);
             string from_emp_id = (string)arr["from_emp_id"];
+            string to_emp_id = (string)arr["to_emp_id"];
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
 
@@ -367,7 +368,7 @@ namespace Server.Controllers
 
             //Getting Table Results from the Database
 
-            List<object> thankcard = _thankcardservice.getFromGiveCardListFromEmployee(from_emp_id, from_date, to_date);
+            List<object> thankcard = _thankcardservice.getFromGiveCardListFromEmployee(from_emp_id,to_emp_id, from_date, to_date);
 
             //Return Updated Result to Client with JSON format
             returndata.Add(thankcard);
