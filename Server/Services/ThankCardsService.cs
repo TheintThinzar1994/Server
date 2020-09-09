@@ -17,7 +17,7 @@ namespace Server.Services
         ThankCard CreateThankCards(ThankCard thakcard);
         List<object> getGiveThankView(int id);
         List<object> getGiveCardList(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date);
-        List<object> getFromGiveCardListFromEmployee(string from_emp_id, DateTime from_date, DateTime to_date);
+        List<object> getFromGiveCardListFromEmployee(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date);
 
     }
     public class ThankCardsService : IThankCardsService
@@ -150,7 +150,7 @@ namespace Server.Services
             return retdata;
 
         }
-        public List<object> getFromGiveCardListFromEmployee(string from_emp_id, DateTime from_date, DateTime to_date)
+        public List<object> getFromGiveCardListFromEmployee(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date)
         {
             DateTime f_date = Convert.ToDateTime(from_date.ToString("yyyy-MM-dd 00:00:00"));
             DateTime t_date = Convert.ToDateTime(to_date.ToString("yyyy-MM-dd 23:59:59"));
@@ -160,7 +160,7 @@ namespace Server.Services
             join te in _context.Employees on tc.To_Employee_Id equals te.Id
             join d in _context.Departments on fe.Dept_Id equals d.Id
             join sd in _context.SubDepartments on fe.Sub_Dept_Id equals sd.Id
-            where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true &&
+            where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true && tc.To_Employee_Id.ToString()==to_emp_id &&
             (tc.SendDate >= f_date && tc.SendDate <= t_date)
                        select new
                        {
