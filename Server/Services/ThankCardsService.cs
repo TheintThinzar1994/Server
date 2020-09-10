@@ -137,7 +137,7 @@ namespace Server.Services
                         join d in _context.Departments on temp.Dept_Id equals d.Id
                         join sd in _context.SubDepartments on temp.Sub_Dept_Id equals sd.Id
                         where EF.Functions.Like(tc.To_Employee_Id.ToString(), to_emp_id) && tc.isActive == true &&
-                        (tc.SendDate>=f_date && tc.SendDate<=t_date) && tc.From_Employee_Id.ToString()== from_emp_id
+                        (tc.SendDate>=f_date && tc.SendDate<=t_date) && tc.From_Employee_Id.ToString()== from_emp_id && femp.isActive == true
                         select new
                         {
                             Emp_Name = temp.User_Name,
