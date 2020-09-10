@@ -141,6 +141,7 @@ namespace Server.Services
                         select new
                         {
                             Emp_Name = temp.User_Name,
+                            Thankid = tc.Id,
                             Dept_Name = d.Name,
                             Sub_Dept_Name = sd.Name,
                             Date = tc.SendDate,
