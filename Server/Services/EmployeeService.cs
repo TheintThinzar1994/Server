@@ -63,10 +63,12 @@ namespace Server.Services
                           {
                               Emp_Id = employee.Id,
                               Emp_Name = employee.User_Name,
+                              Emp_Photo = employee.PhotoName,
                               Dept_Id = dept.Id,
                               Dept_Name = dept.Name,
                               Sub_dep_ID = sub.Id,
                               Sub_dep_Name = sub.Name
+                             
                           };
             List<object> employees = empdata.ToList<object>();
             return employees;

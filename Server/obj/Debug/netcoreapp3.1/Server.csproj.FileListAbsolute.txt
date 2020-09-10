@@ -640,10 +640,5 @@ D:\Server\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
-D:\Server\Server\bin\Debug\netcoreapp3.1\EntityFramework.SqlServer.dll
-D:\Server\Server\bin\Debug\netcoreapp3.1\EntityFramework.dll
-D:\Server\Server\bin\Debug\netcoreapp3.1\System.CodeDom.dll
-D:\Server\Server\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
-D:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-D:\Server\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
+D:\Server\Server\bin\Debug\netcoreapp3.1\Castle.Core.dll
