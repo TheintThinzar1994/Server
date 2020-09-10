@@ -119,6 +119,7 @@ namespace Server.Services
                         select new
                         {
                             s.Id,s.From_Employee_Id,s.To_Employee_Id,From_Employee_Name=femp.User_Name,
+                            From_Employee_Photo = femp.PhotoName, To_Employee_Photo = temp.PhotoName,
                             To_Employee_Name = temp.User_Name,s.Title,s.SendDate,s.SendText,s.ReplyDate,s.ReplyText,
                             s.Status
                         };
@@ -137,14 +138,16 @@ namespace Server.Services
                         join d in _context.Departments on temp.Dept_Id equals d.Id
                         join sd in _context.SubDepartments on temp.Sub_Dept_Id equals sd.Id
                         where EF.Functions.Like(tc.To_Employee_Id.ToString(), to_emp_id) && tc.isActive == true &&
-                        (tc.SendDate>=f_date && tc.SendDate<=t_date) && tc.From_Employee_Id.ToString()== from_emp_id
+                        (tc.SendDate>=f_date && tc.SendDate<=t_date) && tc.From_Employee_Id.ToString()== from_emp_id && femp.isActive == true
                         select new
                         {
                             Emp_Name = temp.User_Name,
+                            Thankid = tc.Id,
                             Dept_Name = d.Name,
                             Sub_Dept_Name = sd.Name,
                             Date = tc.SendDate,
-                            Status = tc.Status
+                            Status = tc.Status,
+                            Thank_Id =tc.Id
                         };
             retdata = data1.ToList<object>();
             return retdata;
