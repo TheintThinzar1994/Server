@@ -144,7 +144,8 @@ namespace Server.Services
                             Dept_Name = d.Name,
                             Sub_Dept_Name = sd.Name,
                             Date = tc.SendDate,
-                            Status = tc.Status
+                            Status = tc.Status,
+                            Thank_Id =tc.Id
                         };
             retdata = data1.ToList<object>();
             return retdata;
