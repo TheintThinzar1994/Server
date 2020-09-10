@@ -57,6 +57,7 @@ namespace Server.Services
                           {
                               Emp_Id = employee.Id,
                               Emp_Name = employee.User_Name,
+                              Emp_PhotoName = employee.PhotoName,
                               Dept_Id = dept.Id,
                               Dept_Name = dept.Name,
                               Sub_dep_ID = sub.Id,
