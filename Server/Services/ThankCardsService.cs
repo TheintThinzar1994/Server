@@ -119,6 +119,7 @@ namespace Server.Services
                         select new
                         {
                             s.Id,s.From_Employee_Id,s.To_Employee_Id,From_Employee_Name=femp.User_Name,
+                            From_Employee_Photo = femp.PhotoName, To_Employee_Photo = temp.PhotoName,
                             To_Employee_Name = temp.User_Name,s.Title,s.SendDate,s.SendText,s.ReplyDate,s.ReplyText,
                             s.Status
                         };
