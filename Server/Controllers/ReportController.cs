@@ -187,6 +187,7 @@ namespace Server.Controllers
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
             string to_emp_id = (string)arr["to_emp_id"];
+            string from_emp_id = (string)arr["from_emp_id"];
             string order = (string)arr["order"];
 
             ////Creating Objects for Json Returns
@@ -197,7 +198,7 @@ namespace Server.Controllers
 
             //Getting Table Results from the Database
 
-            List<object> thankcard = _reportservice.getThankCardTotalByEmployeeView(dept_id, sub_dept_id, from_date, to_date, to_emp_id, order);
+            List<object> thankcard = _reportservice.getThankCardTotalByEmployeeView(dept_id, sub_dept_id, from_date, to_date, from_emp_id , to_emp_id, order);
 
             //Return Updated Result to Client with JSON format
             returndata.Add(thankcard);
@@ -222,6 +223,7 @@ namespace Server.Controllers
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
             string from_emp_id = (string)arr["from_emp_id"];
+           // string from_emp_id = (string)arr["from_emp_id"];
             string order = (string)arr["order"];
 
             ////Creating Objects for Json Returns
@@ -257,6 +259,7 @@ namespace Server.Controllers
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
             string from_emp_id = (string)arr["from_emp_id"];
+            string to_emp_id = (string)arr["to_emp_id"];
             string order = (string)arr["order"];
 
             ////Creating Objects for Json Returns
@@ -267,7 +270,7 @@ namespace Server.Controllers
 
             //Getting Table Results from the Database
 
-            List<object> thankcard = _reportservice.getSentThankCardTotalByEmployeeView(dept_id, sub_dept_id, from_date, to_date, from_emp_id, order);
+            List<object> thankcard = _reportservice.getSentThankCardTotalByEmployeeView(dept_id, sub_dept_id, from_date, to_date, from_emp_id,to_emp_id, order);
 
             //Return Updated Result to Client with JSON format
             returndata.Add(thankcard);
