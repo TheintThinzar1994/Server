@@ -12,7 +12,7 @@ namespace Server.Services
 {
     public interface IEmployeeService
     {
-        List<object> getEmployee(string subdptid);
+        List<object> getEmployee(string empid);
         Employee CreateEmployee(Employee empdata);
         Employee UpdateEmployee(Employee empupdate);
        List<object> getEmployeeByUser(string name);
@@ -27,7 +27,8 @@ namespace Server.Services
         }
         public List<object> getEmployee(string empid)
         {
-            List<object> emplist = new List<object>();            
+         
+            List<object> emplist = new List<object>();
             var data1 = from e in _context.Employees
                         join d in _context.Departments on e.Dept_Id equals d.Id
                         join sd in _context.SubDepartments on e.Sub_Dept_Id equals sd.Id
@@ -43,7 +44,7 @@ namespace Server.Services
 
         public List<object> getEmployeeByUser(string name)
         {
-          
+            
             var data = from users in _context.Users
                      where users.User_Name == name
                        select users;
