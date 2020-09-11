@@ -213,10 +213,10 @@ namespace Server.Services
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
                             select new { Dept_Name = d.Name, Sub_Dept_Name = s.Name,To_Emp_Name = e.User_Name,From_Emp_Name=fe.User_Name,
-                                        From_Dept_Name = fd.Name,From_Sub_Dept_Name = fs.Name
+                                        Send_Date = t.SendDate,From_Dept_Name = fd.Name,From_Sub_Dept_Name = fs.Name
                                        } into result
                             group result by new { result.Dept_Name, result.Sub_Dept_Name, result.To_Emp_Name,result.From_Emp_Name,
-                                                result.From_Dept_Name,result.From_Sub_Dept_Name,
+                                                result.From_Dept_Name,result.From_Sub_Dept_Name,result.Send_Date
                                                  } into g
                             select new
                             {
@@ -226,6 +226,7 @@ namespace Server.Services
                                 From_Emp = g.Key.From_Emp_Name,
                                 From_Dep_Name = g.Key.From_Dept_Name,
                                 From_Sub_Dep_Name = g.Key.From_Sub_Dept_Name,
+                                Send_Date = g.Key.Send_Date,
                                 CountResult = g.Count()
                             } into resultcount
                             orderby resultcount.CountResult descending
@@ -238,8 +239,10 @@ namespace Server.Services
                                 resultcount.From_Dep_Name,
                                 resultcount.From_Sub_Dep_Name,
                                 resultcount.CountResult,
+                                resultcount.Send_Date,
                                 f_date,
-                                t_date
+                                t_date,
+
                             }
                           ;
                 emplist = data1.ToList<object>();
@@ -264,13 +267,15 @@ namespace Server.Services
                                 To_Emp_Name = e.User_Name,
                                 From_Emp_Name = fe.User_Name,
                                 From_Dept_Name = fd.Name,
-                                From_Sub_Dept_Name = fs.Name
+                                From_Sub_Dept_Name = fs.Name,
+                                Send_Date = t.SendDate
                             } into result
                             group result by new
                             {
                                 result.Dept_Name,
                                 result.Sub_Dept_Name,
                                 result.To_Emp_Name,
+                                result.Send_Date,
                                 result.From_Emp_Name,
                                 result.From_Dept_Name,
                                 result.From_Sub_Dept_Name,
@@ -280,6 +285,7 @@ namespace Server.Services
                                 To_Dep_Name = g.Key.Dept_Name,
                                 To_Sub_Dep_Name = g.Key.Sub_Dept_Name,
                                 To_Emp = g.Key.To_Emp_Name,
+                                Send_Date = g.Key.Send_Date,
                                 From_Emp = g.Key.From_Emp_Name,
                                 From_Dep_Name = g.Key.From_Dept_Name,
                                 From_Sub_Dep_Name = g.Key.From_Sub_Dept_Name,
@@ -290,6 +296,7 @@ namespace Server.Services
                             {
                                 resultcount.To_Dep_Name,
                                 resultcount.To_Sub_Dep_Name,
+                                resultcount.Send_Date,
                                 resultcount.To_Emp,
                                 resultcount.From_Emp,
                                 resultcount.From_Dep_Name,
