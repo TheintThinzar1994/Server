@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Server.Model;
 using Server.Services;
 
@@ -123,6 +124,30 @@ namespace Server.Controllers
             List<object> subdptlist = _subdeptservice.getSubDepartment("%");
             List<Department> dptlist = _deptservice.getDepartment("%");
             List<object> userlist = _commonservice.getUserForEmployeeSetup("%");
+            returndata.Add(dptlist);
+            result["status"] = returnstatus;
+            result["department"] = returndata;
+            result["subdepartment"] = subdptlist;
+            result["user"] = userlist;
+            return JsonConvert.SerializeObject(result);
+
+        }
+        [HttpGet]
+        [Route("GetCommonDataEdit")]
+        public string getCommonDataForEdit(string paramList)
+        {
+            var arr = JObject.Parse(paramList);
+            int emp_id = (int)arr["emp_id"];
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            List<object> subdptlist = _subdeptservice.getSubDepartment("%");
+            List<Department> dptlist = _deptservice.getDepartment("%");
+            List<object> userlist = _commonservice.getUserForEmployeeEdit("%",emp_id);
             returndata.Add(dptlist);
             result["status"] = returnstatus;
             result["department"] = returndata;
