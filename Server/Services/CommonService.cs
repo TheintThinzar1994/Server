@@ -3,6 +3,7 @@ using Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Server.Services
@@ -10,6 +11,7 @@ namespace Server.Services
     public interface ICommomService
     {
        List<object> getUserForEmployeeSetup(string userid);
+       List<object> getUserForEmployeeEdit(string userid, int empid);
     }
     public class CommonService : ICommomService
     {
@@ -27,23 +29,46 @@ namespace Server.Services
             userlist = userdata.ToList<User>();
 
             var data = (from user in _context.Users
-                        join emp in _context.Employees on user.Id !equals emp.User_Id
+                        join emp in _context.Employees on user.Id equals emp.User_Id
                         join role in _context.Roles on user.Role_ID equals role.Id
-                        where EF.Functions.Like(user.Id.ToString(), userid) && user.isActive == true    
-                        && user.Id !=emp.User_Id
-                        select new
-                        {
-                            user.Id,
-                            user.User_Name,
-                            user.Password,
-                            user.Created_Date,
-                            user.Updated_Date,
-                            user.Role_ID,
-                            RoleName = role.Name
-                        });
-            
+                        where EF.Functions.Like(user.Id.ToString(), userid) && user.isActive == true && emp.isActive == true
+                        select user
+                       ).Distinct()
+                       ;
+            var udata = from user in _context.Users
+                        where user.isActive == true
+                        select user;
 
-            List<object> userresult = data.ToList<object>();
+            udata = udata.Except(data);
+
+
+            List<object> userresult = udata.ToList<object>();
+            return userresult;
+        }
+        public List<object> getUserForEmployeeEdit(string userid,int empid)
+        {
+            var userdata = from emp in _context.Employees.Where(e=>e.Id==empid)
+                           join user in _context.Users on emp.User_Id equals user.Id
+                           where  emp.isActive==true && user.isActive==true
+                           select user;
+            List<User> userlist = new List<User>();
+            userlist = userdata.ToList<User>();
+
+            var data = (from user in _context.Users
+                        join emp in _context.Employees.Where(e=>e.Id!=empid) on user.Id equals emp.User_Id 
+                        join role in _context.Roles on user.Role_ID equals role.Id
+                        where EF.Functions.Like(user.Id.ToString(), userid) && user.isActive == true && emp.isActive==true
+                        select user  
+                        ).Distinct()
+                        ;
+            var udata = from user in _context.Users
+                        where user.isActive == true
+                        select user;
+
+            udata = udata.Except(data);
+
+
+            List<object> userresult = udata.ToList<object>();
             return userresult;
         }
     }
