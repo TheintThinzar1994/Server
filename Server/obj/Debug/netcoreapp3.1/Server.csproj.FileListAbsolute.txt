@@ -471,8 +471,6 @@ D:\Team3ST\Server\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs
-D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
-D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.MvcApplicationPartsAssemblyInfo.cache
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.RazorTargetAssemblyInfo.cache
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.csproj.CopyComplete
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.Manifest.cache
@@ -641,3 +639,6 @@ D:\Server\Server\obj\Debug\netcoreapp3.1\staticwebassets\Server.StaticWebAssets.
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.dll
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
+D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.GeneratedMSBuildEditorConfig.editorconfig
+D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
+D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.MvcApplicationPartsAssemblyInfo.cache
