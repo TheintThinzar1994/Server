@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json.Linq;
 using Server.Helpers;
 using Server.Model;
@@ -78,14 +79,15 @@ namespace Server.Services
                 (menurole, menu) => new
                 {
                     MenuID = menu.Id,
+                    MenuOrder = menu.order,
                     MenuName = menu.Menu_Name,
                     ParentID = menu.Parent_Id,
                     Des = menu.Description,
                     Action = menu.Action,
                     RoutePath = menu.RoutePath,
                     Icon = menu.Icon
-                }
-                ).ToList();
+                } 
+                ).ToList().OrderBy(Menu=> Menu.MenuOrder).ToList();
             objlist = query.ToList<object>();           
             //foreach (var invoice in query)
             //{

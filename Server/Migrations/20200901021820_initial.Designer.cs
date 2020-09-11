@@ -139,6 +139,9 @@ namespace Server.Migrations
                     b.Property<DateTime>("ts")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("order")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.ToTable("Menu");
