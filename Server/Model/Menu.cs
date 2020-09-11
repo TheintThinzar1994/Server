@@ -25,5 +25,6 @@ namespace Server.Model
         public bool Is_Active { get; set; }
         public DateTime ts { get; set; }
         
+        public int order { get; set; }
     }
 }

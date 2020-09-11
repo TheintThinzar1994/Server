@@ -38,7 +38,8 @@ namespace Server.Migrations
                     RoutePath = table.Column<string>(nullable: true),
                     Icon = table.Column<string>(nullable: true),
                     Is_Active = table.Column<bool>(nullable: false),
-                    ts = table.Column<DateTime>(nullable: false)
+                    ts = table.Column<DateTime>(nullable: false),
+                    order = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
