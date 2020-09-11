@@ -138,11 +138,11 @@ namespace Server.Controllers
             string email = (string)arr["email"];
             string phone = (string)arr["phone"];
             string photoname = (string)arr["photoname"];
-            
+
 
             //Checking Duplicate Records in Sub Departments by SSM
             //add new id check by snh
-            var emp_var = _context.Employees.Where(e => e.User_Name == name && e.Dept_Id == dept_id && e.Sub_Dept_Id==sub_dept_id && e.Id !=Id);
+            var emp_var = _context.Employees.Where(e => e.User_Name == name && e.Dept_Id == dept_id && e.Sub_Dept_Id == sub_dept_id && e.Id != Id && e.isActive == true);
 
             //Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
