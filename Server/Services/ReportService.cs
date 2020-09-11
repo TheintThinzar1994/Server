@@ -155,8 +155,8 @@ namespace Server.Services
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
-                            select new { Dept_Name = d.Name,Dept_Id = d.Id,Sub_Dept_Id = s.Id, To_Emp_Id = t.To_Employee_Id, Sub_Dept_Name = s.Name, Emp_Name = e.User_Name } into result
-                            group result by new { result.Dept_Name, result.To_Emp_Id, result.Dept_Id, result.Sub_Dept_Id, result.Sub_Dept_Name, result.Emp_Name } into g
+                            select new { Dept_Name = d.Name,Dept_Id = d.Id,Sub_Dept_Id = s.Id, Sub_Dept_Name = s.Name, To_Emp_Id = t.To_Employee_Id, Emp_Name = e.User_Name } into result
+                            group result by new { result.Dept_Name, result.Dept_Id, result.Sub_Dept_Id, result.To_Emp_Id, result.Sub_Dept_Name, result.Emp_Name } into g
                             select new
                             {
                                 Dept_Name = g.Key.Dept_Name,
