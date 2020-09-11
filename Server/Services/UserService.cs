@@ -79,6 +79,7 @@ namespace Server.Services
                 (menurole, menu) => new
                 {
                     MenuID = menu.Id,
+                    MenuOrder = menu.order,
                     MenuName = menu.Menu_Name,
                     ParentID = menu.Parent_Id,
                     Des = menu.Description,
@@ -86,7 +87,7 @@ namespace Server.Services
                     RoutePath = menu.RoutePath,
                     Icon = menu.Icon
                 } 
-                ).ToList().OrderBy(MenuRole => MenuRole.MenuID).ToList();
+                ).ToList().OrderBy(Menu=> Menu.MenuOrder).ToList();
             objlist = query.ToList<object>();           
             //foreach (var invoice in query)
             //{
