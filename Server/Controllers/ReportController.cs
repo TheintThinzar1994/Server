@@ -223,6 +223,7 @@ namespace Server.Controllers
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
             string from_emp_id = (string)arr["from_emp_id"];
+           // string from_emp_id = (string)arr["from_emp_id"];
             string order = (string)arr["order"];
 
             ////Creating Objects for Json Returns
