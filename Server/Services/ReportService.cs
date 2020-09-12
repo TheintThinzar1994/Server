@@ -40,7 +40,8 @@ namespace Server.Services
                             join e in _context.Employees on t.To_Employee_Id equals e.Id
                             join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                             join d in _context.Departments on e.Dept_Id equals d.Id
-                            where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true 
+                            && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             select new { Dept_Name = d.Name, Sub_Dept_Name = s.Name } into result
                             group result by new { result.Dept_Name, result.Sub_Dept_Name } into g
@@ -70,6 +71,7 @@ namespace Server.Services
                             join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             select new { Dept_Name = d.Name, Sub_Dept_Name = s.Name } into result
                             group result by new { result.Dept_Name, result.Sub_Dept_Name } into g
@@ -115,6 +117,7 @@ namespace Server.Services
                             join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
                             select new { Dept_Name = d.Name, Dept_Id = d.Id, Sub_Dept_Id = s.Id, From_Emp_Id = t.From_Employee_Id, To_Emp_Id = t.To_Employee_Id , Sub_Dept_Name = s.Name,Emp_Name = e.User_Name } into result
@@ -154,7 +157,8 @@ namespace Server.Services
                             join e in _context.Employees on t.To_Employee_Id equals e.Id
                             join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                             join d in _context.Departments on e.Dept_Id equals d.Id
-                            where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true 
+                            && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
                             select new { Dept_Name = d.Name,Dept_Id = d.Id,Sub_Dept_Id = s.Id, Sub_Dept_Name = s.Name, From_Emp_Id = t.From_Employee_Id,To_Emp_Id = t.To_Employee_Id, Emp_Name = e.User_Name } into result
@@ -215,7 +219,7 @@ namespace Server.Services
                             join fs in _context.SubDepartments on fe.Sub_Dept_Id equals fs.Id
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && 
-                            e.isActive == true
+                            e.isActive == true && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)&&
                             EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)
                             && EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
@@ -264,7 +268,8 @@ namespace Server.Services
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             join fs in _context.SubDepartments on fe.Sub_Dept_Id equals fs.Id
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
-                            where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true &&
+                            t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)&&
                             EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)
                             && EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
@@ -341,6 +346,7 @@ namespace Server.Services
                             join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)
                             select new { Dept_Name = d.Name,Dept_Id = d.Id,Sub_Dept_Id = s.Id, Sub_Dept_Name = s.Name,From_Employee_Id =t.From_Employee_Id, To_Employee_Id = t.To_Employee_Id, Emp_Name = e.User_Name } into result
@@ -381,6 +387,7 @@ namespace Server.Services
                             join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                             join d in _context.Departments on e.Dept_Id equals d.Id
                             where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                            && t.isActive==true
                             && EF.Functions.Like(d.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)
                             select new { Dept_Name = d.Name, Dept_Id = d.Id, Sub_Dept_Id = s.Id, Sub_Dept_Name = s.Name,From_Emp_Id = t.From_Employee_Id,To_Emp_Id = t.To_Employee_Id, Emp_Name = e.User_Name } into result
@@ -442,6 +449,7 @@ namespace Server.Services
                             join fs in _context.SubDepartments on fe.Sub_Dept_Id equals fs.Id
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
                             where EF.Functions.Like(fs.Id.ToString(), sub_dept_id) && e.isActive == true
+                            && t.isActive==true
                             && EF.Functions.Like(fd.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)&&
                                EF.Functions.Like(t.To_Employee_Id.ToString(),to_emp_id)
@@ -504,6 +512,7 @@ namespace Server.Services
                             join fs in _context.SubDepartments on fe.Sub_Dept_Id equals fs.Id
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
                             where EF.Functions.Like(fs.Id.ToString(), sub_dept_id) && e.isActive == true
+                            && t.isActive==true
                             && EF.Functions.Like(fd.Id.ToString(), dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             && EF.Functions.Like(t.From_Employee_Id.ToString(), from_emp_id)&&
                                EF.Functions.Like(t.To_Employee_Id.ToString(), to_emp_id)
@@ -575,6 +584,7 @@ namespace Server.Services
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
                             join td in _context.Departments on te.Dept_Id equals td.Id
                             where EF.Functions.Like(fe.Dept_Id.ToString(), from_dept_id) && t.isActive == true
+                            && fe.isActive==true && te.isActive==true
                             && EF.Functions.Like(te.Dept_Id.ToString(), to_dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             select new { From_Dept_Name = fd.Name, To_Dept_Name = td.Name } into result
                             group result by new { result.From_Dept_Name, result.To_Dept_Name } into g
@@ -605,6 +615,7 @@ namespace Server.Services
                             join fd in _context.Departments on fe.Dept_Id equals fd.Id
                             join td in _context.Departments on te.Dept_Id equals td.Id
                             where EF.Functions.Like(fd.Id.ToString(), from_dept_id) && t.isActive == true
+                            && fe.isActive==true && te.isActive==true
                             && EF.Functions.Like(td.Id.ToString(), to_dept_id) && (t.SendDate >= f_date && t.SendDate <= t_date)
                             select new { From_Dept_Name = fd.Name, To_Dept_Name = td.Name } into result
                             group result by new { result.From_Dept_Name, result.To_Dept_Name } into g
