@@ -28,8 +28,9 @@ namespace Server.Services
         {
             List<object> subdptlist = new List<object>();            
             var data1 = from s in _context.SubDepartments
-                        join d in _context.Departments on s.Dept_Id equals d.Id
+                        join d in _context.Departments on s.Dept_Id equals d.Id 
                        where EF.Functions.Like(s.Id.ToString(), subdptid) && s.Is_Active == 1
+                       && d.Is_Active==true
                        select new { Sub_Dept_Id=s.Id,Sub_Dept_Name=s.Name,Dept_Name=d.Name,Dept_Id=d.Id};
             subdptlist = data1.ToList<object>();
             return subdptlist;
