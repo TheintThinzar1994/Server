@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.Xml;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace Server.Services
@@ -93,6 +94,7 @@ namespace Server.Services
                         join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                         join d in _context.Departments on e.Dept_Id equals d.Id
                         where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
+                        && s.Is_Active==1 && d.Is_Active==true
                         && EF.Functions.Like(d.Id.ToString(), dept_id) && EF.Functions.Like(e.Id.ToString(), emp_id)
                         select new
                         {
@@ -115,7 +117,7 @@ namespace Server.Services
             var data1 = from s in _context.ThankCards
                         join femp in _context.Employees on s.From_Employee_Id equals femp.Id
                         join temp in _context.Employees on s.To_Employee_Id equals temp.Id
-                        where s.Id == id && s.isActive==true
+                        where s.Id == id && s.isActive==true && femp.isActive==true && temp.isActive==true
                         select new
                         {
                             s.Id,s.From_Employee_Id,s.To_Employee_Id,From_Employee_Name=femp.User_Name,
@@ -138,6 +140,7 @@ namespace Server.Services
                         join d in _context.Departments on temp.Dept_Id equals d.Id
                         join sd in _context.SubDepartments on temp.Sub_Dept_Id equals sd.Id
                         where EF.Functions.Like(tc.To_Employee_Id.ToString(), to_emp_id) && tc.isActive == true &&
+                        femp.isActive==true && temp.isActive==true && d.Is_Active==true && sd.Is_Active==1 &&
                         (tc.SendDate>=f_date && tc.SendDate<=t_date) && tc.From_Employee_Id.ToString()== from_emp_id && femp.isActive == true
                         select new
                         {
@@ -163,7 +166,9 @@ namespace Server.Services
             join te in _context.Employees on tc.To_Employee_Id equals te.Id
             join d in _context.Departments on fe.Dept_Id equals d.Id
             join sd in _context.SubDepartments on fe.Sub_Dept_Id equals sd.Id
-            where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true && tc.To_Employee_Id.ToString()==to_emp_id &&
+            where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true 
+            && fe.isActive==true && te.isActive==true && d.Is_Active==true && sd.Is_Active==1
+            && tc.To_Employee_Id.ToString()==to_emp_id &&
             (tc.SendDate >= f_date && tc.SendDate <= t_date)
                        select new
                        {

@@ -87,7 +87,8 @@ namespace Server.Services
                     RoutePath = menu.RoutePath,
                     Icon = menu.Icon
                 } 
-                ).ToList().OrderBy(Menu=> Menu.MenuOrder).ToList();
+                ).ToList().OrderBy(Menu => Menu.MenuOrder).ToList();
+         
             objlist = query.ToList<object>();           
             //foreach (var invoice in query)
             //{
