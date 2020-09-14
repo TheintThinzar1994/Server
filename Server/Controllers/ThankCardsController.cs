@@ -338,7 +338,7 @@ namespace Server.Controllers
 
             //Getting Table Results from the Database
 
-            List<object> thankcard = _thankcardservice.getGiveCardList(from_emp_id,to_emp_id, from_date, to_date);
+            List<object> thankcard = _thankcardservice.getGiveCardList(from_emp_id,to_emp_id, from_date, to_date,to_dept_id,to_s_dept_id);
 
             //Return Updated Result to Client with JSON format
             returndata.Add(thankcard);
