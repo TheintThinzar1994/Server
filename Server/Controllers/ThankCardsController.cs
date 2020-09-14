@@ -327,6 +327,8 @@ namespace Server.Controllers
             string to_emp_id = (string)arr["to_emp_id"];
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
+            string to_dept_id = (string)arr["to_dept_id"];
+            string to_s_dept_id = (string)arr["to_s_dept_id"];
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
