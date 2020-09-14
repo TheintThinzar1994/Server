@@ -13,7 +13,7 @@ namespace Server.Services
     public interface IEmployeeService
     {
         List<object> getEmployee(string empid);
-        Employee CreateEmployee(Employee empdata);
+        Boolean CreateEmployee(Employee empdata);
         Employee UpdateEmployee(Employee empupdate);
        List<object> getEmployeeByUser(string name);
     }
@@ -33,7 +33,8 @@ namespace Server.Services
                         join d in _context.Departments on e.Dept_Id equals d.Id
                         join sd in _context.SubDepartments on e.Sub_Dept_Id equals sd.Id
                         join u in _context.Users.DefaultIfEmpty() on e.User_Id equals u.Id
-                        where EF.Functions.Like(e.Id.ToString(), empid) && e.isActive == true
+                        where EF.Functions.Like(e.Id.ToString(), empid) && e.isActive == true &&
+                        d.Is_Active==true && sd.Is_Active==1 && u.isActive==true
                         select new { Emp_Id=e.Id,Emp_Name=e.User_Name,Sub_Dept_Id=sd.Id,Sub_Dept_Name=sd.Name,
                         Dept_Id=d.Id,Dept_Name=d.Name,User_Id=u.Id,User_Name=u.User_Name,e.Address,e.Email,e.Phone,e.PhotoName,
                         e.Created_Date,e.End_Date
@@ -53,7 +54,8 @@ namespace Server.Services
             var empdata = from employee in _context.Employees
                           join dept in _context.Departments on employee.Dept_Id equals dept.Id
                           join sub in _context.SubDepartments on employee.Sub_Dept_Id equals sub.Id
-                          where employee.User_Id == user_id && employee.isActive == true
+                          where employee.User_Id == user_id && employee.isActive == true 
+                          && dept.Is_Active==true && sub.Is_Active==1
                           select new
                           {
                               Emp_Id = employee.Id,
@@ -68,11 +70,21 @@ namespace Server.Services
             return employees;
 
         }
-        public Employee CreateEmployee(Employee empdata)
+        public Boolean CreateEmployee(Employee empdata)
         {
-            _context.Employees.Add(empdata);
-            _context.SaveChanges();
-            return empdata;
+            Boolean status = true;
+            try
+            {
+                _context.Employees.Add(empdata);
+                _context.SaveChanges();
+                status = true;
+            }
+            catch(Exception e)
+            {
+                status = false;
+            }
+            
+            return status;
         }
         public Employee UpdateEmployee(Employee empupdate)
         {            

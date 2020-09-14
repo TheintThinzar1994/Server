@@ -28,6 +28,7 @@ namespace Server.Services
         User InsertUser(User userdata);
         User UpdateUser(User userdata);
         User DeleteUser(User userdata);
+        Employee UpdateUserEmployee(User userdata, int emp_id);
         //void Update(User user, string password = null);
         // void Delete(int id);
     }
@@ -87,7 +88,8 @@ namespace Server.Services
                     RoutePath = menu.RoutePath,
                     Icon = menu.Icon
                 } 
-                ).ToList().OrderBy(Menu=> Menu.MenuOrder).ToList();
+                ).ToList().OrderBy(Menu => Menu.MenuOrder).ToList();
+         
             objlist = query.ToList<object>();           
             //foreach (var invoice in query)
             //{
@@ -170,6 +172,28 @@ namespace Server.Services
                        select user;
             List<User> users = data.ToList<User>();
             return users[0];
+        }
+        public Employee UpdateUserEmployee(User userdata,int emp_id)
+        {            
+            var data = from emp in _context.Employees
+                       where emp.Id == emp_id && emp.isActive == true 
+                       select emp;
+            List<Employee> empdata = data.ToList<Employee>();
+            if (empdata.Count() > 0)
+            {
+                empdata[0].User_Id = (long)userdata.Id;
+                empdata[0].ts = DateTime.Now;
+                _context.Employees.Update(empdata[0]);
+                _context.SaveChanges();
+                return empdata[0];
+
+            }
+            else
+            {
+                Employee e = new Employee();
+                return e;
+            }
+            
         }
         public User UpdateUser(User userdata)
         {

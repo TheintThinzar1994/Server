@@ -156,6 +156,51 @@ namespace Server.Controllers
             return JsonConvert.SerializeObject(result);
 
         }
+
+        [HttpGet]
+        [Route("GetUserSetupCommon")]
+        public string getCommonUserSetup()
+        {
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            //List<object> subdptlist = _subdeptservice.getSubDepartment("%");
+            //List<Department> dptlist = _deptservice.getDepartment("%");
+            List<object> emplist = _commonservice.getEmployeeForUserSetup("%");
+            returndata.Add(emplist);
+            result["status"] = returnstatus;
+            result["employee"] = returndata;
+            return JsonConvert.SerializeObject(result);
+
+        }
+
+        [HttpGet]
+        [Route("GetUserEditCommon")]
+        public string getCommonUserEdit(string paramList)
+        {
+            var arr = JObject.Parse(paramList);
+            int user_id = (int)arr["user_id"];
+            IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
+            List<object> returndata = new List<object>();
+            List<object> returnstatus = new List<object>();
+            ReturnData retdata = new ReturnData();
+            retdata.statuscode = "200";
+            retdata.status = "Success";
+            returnstatus.Add(retdata);
+            //List<object> subdptlist = _subdeptservice.getSubDepartment("%");
+            //List<Department> dptlist = _deptservice.getDepartment("%");
+            List<object> emplist = _commonservice.getEmployeeForUserEdit(user_id,"%");
+            returndata.Add(emplist);
+            result["status"] = returnstatus;
+            result["employee"] = returndata;
+            return JsonConvert.SerializeObject(result);
+
+        }
+
         private bool UserExists(long? id)
         {
             return _context.Users.Any(e => e.Id == id);

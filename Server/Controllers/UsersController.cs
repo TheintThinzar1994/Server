@@ -88,7 +88,7 @@ namespace Server.Controllers
             string name = (string)arr["User_Name"];
             string password = (string)arr["password"];
             int Role_Id = (int)arr["role_id"];
-
+            int Emp_Id = (int)arr["emp_id"];
             //Checking Duplicate Records in Users by SSM
             var user = _context.Users.Where(e => e.User_Name == name);
 
@@ -96,6 +96,7 @@ namespace Server.Controllers
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
+            List<object> emplist = new List<object>();
             ReturnData retdata = new ReturnData();
 
             // Return Conditions Checking for No Duplicate or Not
@@ -106,6 +107,7 @@ namespace Server.Controllers
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
                 result["user"] = returndata;
+                result["employee"] = emplist;
             }
             else
             {
@@ -121,25 +123,46 @@ namespace Server.Controllers
                 User userresult = _userService.InsertUser(userData);
 
 
-                //List<Employee> emplist = new List<Employee>();
-                //var data1 = from s in _context.Employees
-                //            where s.Id == Emp_Id && s.isActive == true
-                //            select s;
-                //emplist = data1.ToList<Employee>();
-                //Employee empdata = new Employee();
-                //if (emplist.Count() > 0)
-                //{
-                //    empdata = emplist[0];
-                //    empdata.User_Id = (long)userresult.Id;
-                //    Employee empresult = _empService.UpdateEmployee(empdata);
-                //}
+                if (userresult != null)
+                {
+                    Employee empdata = _userService.UpdateUserEmployee(userData, Emp_Id);
+                    
+                    if(empdata != null)
+                    {
+                        emplist.Add(empdata);
+                        retdata.statuscode = "200";
+                        retdata.status = "Success";
+                        returnstatus.Add(retdata);
+                        returndata.Add(userresult);
+                        result["status"] = returnstatus;
+                        result["user"] = returndata;
+                        result["employee"] = emplist;
+                        
+                    }
+                    else
+                    {
+                        emplist.Add(empdata);
+                        retdata.statuscode = "304";
+                        retdata.status = "Failed To update Employee Data:";
+                        returnstatus.Add(retdata);
+                        returndata.Add(userresult);
+                        result["status"] = returnstatus;
+                        result["user"] = returndata;
+                        result["employee"] = emplist;
+                    }
+                }
+                else
+                {
+                    retdata.statuscode = "304";
+                    retdata.status = "Failed To Insert User Data";
+                    returnstatus.Add(retdata);
+                    returndata.Add(userresult);
+                    result["status"] = returnstatus;
+                    result["user"] = returndata;
+                    result["employee"] = emplist;
+                }
 
-                retdata.statuscode = "200";
-                retdata.status = "Success";
-                returnstatus.Add(retdata);
-                returndata.Add(userresult);
-                result["status"] = returnstatus;
-                result["user"] = returndata;
+                
 
             }
             return JsonConvert.SerializeObject(result);
@@ -154,7 +177,8 @@ namespace Server.Controllers
             int Id = (int)arr["Id"];
             string name = (string)arr["User_Name"];
             string password = (string)arr["password"];
-            int Role_Id = (int)arr["role_id"]; 
+            int Role_Id = (int)arr["role_id"];
+            int Emp_Id = (int)arr["emp_id"];
 
             //Checking Duplicate Records in Users by SSM
             //add new user id check by SNH
@@ -164,6 +188,7 @@ namespace Server.Controllers
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
+            List<object> emplist = new List<object>();
             ReturnData retdata = new ReturnData();
 
             // Return Conditions Checking for No Duplicate before update new User Name
@@ -186,13 +211,43 @@ namespace Server.Controllers
                 userData.ts = DateTime.Now;
                 userData.Role_ID = Role_Id;  
 
-                retdata.statuscode = "200";
-                retdata.status = "Success";
-                returnstatus.Add(retdata);
+               
                 User userresult = _userService.UpdateUser(userData);
-                returndata.Add(userresult);
-                result["status"] = returnstatus;
-                result["user"] = returndata;
+                if(userresult != null)
+                {
+                    Employee empresult= _userService.UpdateUserEmployee(userresult, Emp_Id);
+                    if (empresult != null)
+                    {
+                        retdata.statuscode = "200";
+                        retdata.status = "Success";
+                        returnstatus.Add(retdata);
+                        returndata.Add(userresult);
+                        result["status"] = returnstatus;
+                        result["user"] = returndata;
+                        result["employee"] = emplist;
+                    }
+                    else
+                    {
+                        retdata.statuscode = "304";
+                        retdata.status = "Failed To update Employee Data:";
+                        returnstatus.Add(retdata);
+                        returndata.Add(userresult);
+                        result["status"] = returnstatus;
+                        result["user"] = returndata;
+                        result["employee"] = emplist;
+                    }
+                }
+                else
+                {
+                    retdata.statuscode = "304";
+                    retdata.status = "Failed To insert User Data:";
+                    returnstatus.Add(retdata);
+                    returndata.Add(userresult);
+                    result["status"] = returnstatus;
+                    result["user"] = returndata;
+                    result["employee"] = emplist;
+                }
+                
 
             }
             return JsonConvert.SerializeObject(result);
