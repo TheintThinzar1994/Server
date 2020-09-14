@@ -90,23 +90,18 @@ namespace Server.Services
         public List<object> getEmployee(string dept_id, string sub_dept_id, string emp_id)
         {
             List<object> emplist = new List<object>();
+            var empdata = from e in _context.Employees
+                          where e.Id.ToString() == emp_id
+                          select e;
+
             var data1 = from e in _context.Employees
                         join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                         join d in _context.Departments on e.Dept_Id equals d.Id
                         where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
                         && s.Is_Active==1 && d.Is_Active==true
-                        && EF.Functions.Like(d.Id.ToString(), dept_id) && EF.Functions.Like(e.Id.ToString(), emp_id)
-                        select new
-                        {
-                            Emp_Id = e.Id,
-                            Emp_Name = e.User_Name,
-                            PhotoName = e.PhotoName,
-                            sub_dept_id = s.Id,
-                            Sub_Dept_Name = s.Name,
-                            dept_id = d.Id,
-                            Dept_Name = d.Name
-
-                        };
+                        && EF.Functions.Like(d.Id.ToString(), dept_id) 
+                        select e;
+            var result = data1.Except(empdata);
             emplist = data1.ToList<object>();
             return emplist;
         }

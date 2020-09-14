@@ -225,7 +225,7 @@ namespace Server.Controllers
             var arr = JObject.Parse(paramList);
             string emp_id = (string)arr["emp_id"];
             string dept_id = (string)arr["dept_id"];
-            string sub_dept_id = (string)arr["sub_dept_id"];           
+            string sub_dept_id = (string)arr["sub_dept_id"]; 
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
