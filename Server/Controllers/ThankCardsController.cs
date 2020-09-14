@@ -359,6 +359,8 @@ namespace Server.Controllers
             string to_emp_id = (string)arr["to_emp_id"];
             DateTime from_date = (DateTime)arr["from_date"];
             DateTime to_date = (DateTime)arr["to_date"];
+            string from_dep_id = (string)arr["from_dept_id"];
+            string from_sub_dept_id = (string)arr["from_sub_dept_id"];
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -368,7 +370,7 @@ namespace Server.Controllers
 
             //Getting Table Results from the Database
 
-            List<object> thankcard = _thankcardservice.getFromGiveCardListFromEmployee(from_emp_id,to_emp_id, from_date, to_date);
+            List<object> thankcard = _thankcardservice.getFromGiveCardListFromEmployee(from_emp_id,to_emp_id, from_date, to_date,from_dep_id,from_sub_dept_id);
 
             //Return Updated Result to Client with JSON format
             returndata.Add(thankcard);

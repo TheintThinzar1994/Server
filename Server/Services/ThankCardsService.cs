@@ -2,6 +2,7 @@
 using Server.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Security.Principal;
@@ -18,7 +19,7 @@ namespace Server.Services
         ThankCard CreateThankCards(ThankCard thakcard);
         List<object> getGiveThankView(int id);
         List<object> getGiveCardList(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date);
-        List<object> getFromGiveCardListFromEmployee(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date);
+        List<object> getFromGiveCardListFromEmployee(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date,string f_dept_id,string f_s_dept_id);
 
     }
     public class ThankCardsService : IThankCardsService
@@ -151,7 +152,7 @@ namespace Server.Services
             return retdata;
 
         }
-        public List<object> getFromGiveCardListFromEmployee(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date)
+        public List<object> getFromGiveCardListFromEmployee(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date,string f_dept_id,string f_s_dept_id)
         {
             DateTime f_date = Convert.ToDateTime(from_date.ToString("yyyy-MM-dd 00:00:00"));
             DateTime t_date = Convert.ToDateTime(to_date.ToString("yyyy-MM-dd 23:59:59"));
@@ -163,7 +164,9 @@ namespace Server.Services
             join sd in _context.SubDepartments on fe.Sub_Dept_Id equals sd.Id
             where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true 
             && fe.isActive==true && te.isActive==true && d.Is_Active==true && sd.Is_Active==1
-            && tc.To_Employee_Id.ToString()==to_emp_id &&
+            && tc.To_Employee_Id.ToString()==to_emp_id 
+            && EF.Functions.Like(d.Id.ToString(),f_dept_id) && 
+            EF.Functions.Like(sd.Id.ToString(),f_s_dept_id) &&
             (tc.SendDate >= f_date  && tc.SendDate <= t_date)
                        select new
                        {
