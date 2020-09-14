@@ -55,6 +55,7 @@ namespace Server.Services
                           join dept in _context.Departments on employee.Dept_Id equals dept.Id
                           join sub in _context.SubDepartments on employee.Sub_Dept_Id equals sub.Id
                           where employee.User_Id == user_id && employee.isActive == true 
+                          && dept.Is_Active==true && sub.Is_Active==1
                           select new
                           {
                               Emp_Id = employee.Id,

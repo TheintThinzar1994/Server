@@ -169,7 +169,7 @@ namespace Server.Services
             where EF.Functions.Like(tc.From_Employee_Id.ToString(), from_emp_id) && tc.isActive == true 
             && fe.isActive==true && te.isActive==true && d.Is_Active==true && sd.Is_Active==1
             && tc.To_Employee_Id.ToString()==to_emp_id &&
-            (tc.SendDate >= f_date && tc.SendDate <= t_date)
+            (tc.SendDate >= f_date  && tc.SendDate <= t_date)
                        select new
                        {
                            Emp_Name = fe.User_Name,
