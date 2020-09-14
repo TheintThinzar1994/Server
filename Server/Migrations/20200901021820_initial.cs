@@ -169,7 +169,7 @@ namespace Server.Migrations
                     User_Name = table.Column<string>(nullable: true),
                     Sub_Dept_Id = table.Column<long>(nullable: true),
                     Dept_Id = table.Column<long>(nullable: false),
-                    User_Id = table.Column<long>(nullable: false),
+                    User_Id = table.Column<long>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: false),
@@ -194,12 +194,12 @@ namespace Server.Migrations
                         principalTable: "SubDepartments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Employees_Users_User_Id",
-                        column: x => x.User_Id,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    //table.ForeignKey(
+                    //    name: "FK_Employees_Users_User_Id",
+                    //    column: x => x.User_Id,
+                    //    principalTable: "Users",
+                    //    principalColumn: "Id",
+                    //    onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

@@ -288,7 +288,8 @@ namespace Server.Controllers
             string name = (string)arr["Name"];
             int sub_dept_id = (int)arr["Sub_Dept_Id"];
             int dept_id = (int)arr["Dept_Id"];
-            int user_id = (int)arr["User_Id"]; 
+            //int user_id = (int)arr["User_Id"]; 
+            int user_id = 0;
             string address = (string)arr["Address"];
             string email = (string)arr["email"];
             string phone = (string)arr["phone"];
