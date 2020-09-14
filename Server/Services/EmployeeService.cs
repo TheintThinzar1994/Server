@@ -13,7 +13,7 @@ namespace Server.Services
     public interface IEmployeeService
     {
         List<object> getEmployee(string empid);
-        Employee CreateEmployee(Employee empdata);
+        Boolean CreateEmployee(Employee empdata);
         Employee UpdateEmployee(Employee empupdate);
        List<object> getEmployeeByUser(string name);
     }
@@ -70,11 +70,21 @@ namespace Server.Services
             return employees;
 
         }
-        public Employee CreateEmployee(Employee empdata)
+        public Boolean CreateEmployee(Employee empdata)
         {
-            _context.Employees.Add(empdata);
-            _context.SaveChanges();
-            return empdata;
+            Boolean status = true;
+            try
+            {
+                _context.Employees.Add(empdata);
+                _context.SaveChanges();
+                status = true;
+            }
+            catch(Exception e)
+            {
+                status = false;
+            }
+            
+            return status;
         }
         public Employee UpdateEmployee(Employee empupdate)
         {            
