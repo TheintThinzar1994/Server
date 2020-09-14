@@ -36,6 +36,7 @@ namespace Server.Services
                         where EF.Functions.Like(e.Id.ToString(), empid) && e.isActive == true &&
                         d.Is_Active==true && sd.Is_Active==1 && u.isActive==true
                         select new { Emp_Id=e.Id,Emp_Name=e.User_Name,Sub_Dept_Id=sd.Id,Sub_Dept_Name=sd.Name,
+                        User_Role = u.Role_ID,User_Pass=u.Password,
                         Dept_Id=d.Id,Dept_Name=d.Name,User_Id=u.Id,User_Name=u.User_Name,e.Address,e.Email,e.Phone,e.PhotoName,
                         e.Created_Date,e.End_Date
                         };
