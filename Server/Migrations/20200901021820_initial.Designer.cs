@@ -321,7 +321,7 @@ namespace Server.Migrations
 
                     b.HasOne("Server.Model.User", "User")
                         .WithMany()
-                        .HasForeignKey("User_Id")
+                        //.HasForeignKey("User_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
