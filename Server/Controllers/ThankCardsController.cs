@@ -109,6 +109,7 @@ namespace Server.Controllers
         [HttpPut]
         [Route("UpdateView")]
         public string UpdateThankCardView(string paramList)
+        
         {
             //Accepting data from 
             var arr = JObject.Parse(paramList);
@@ -358,7 +359,7 @@ namespace Server.Controllers
         [HttpGet]
         [Route("ThankCardsFemp")] // Home Page List By TTZH
         public string   getGiveCardFromEmployeeList(string paramList)
-        {
+       {
             //Accepting data from             
             var arr = JObject.Parse(paramList);
             string from_emp_id = (string)arr["from_emp_id"];
