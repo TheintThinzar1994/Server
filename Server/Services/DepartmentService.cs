@@ -34,6 +34,7 @@ namespace Server.Services
         {
             var data = from s in _context.Departments
                        where EF.Functions.Like(s.Id.ToString(), departmentId) && s.Is_Active == true
+                       orderby s.ts descending
                        select s;
             List<Department> departData = data.ToList<Department>();
             return departData;

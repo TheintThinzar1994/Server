@@ -182,7 +182,7 @@ namespace Server.Controllers
             int Dept_Id = (int)arr["Dept_Id"];
 
             //Checking Data Have or Not in SubDepartments Table
-            var subdepartment = _context.SubDepartments.Where(e => e.Name==name && e.Id != id);
+            var subdepartment = _context.SubDepartments.Where(e => e.Name==name && e.Id != id && e.Is_Active==1);
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
@@ -235,7 +235,7 @@ namespace Server.Controllers
             //Checking Data Have or Not in SubDepartments Table
             var subdepartment = _context.SubDepartments.Where(e => e.Id == id && e.Is_Active == 1);
             
-            var employee = _context.Employees.Where(e => e.Sub_Dept_Id == id);
+            var employee = _context.Employees.Where(e => e.Sub_Dept_Id == id && e.isActive==true);
 
             ////Creating Objects for Json Returns
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
