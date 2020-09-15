@@ -802,3 +802,4 @@ D:\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 D:\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.csproj.CoreCompileInputs.cache
 D:\Team3ST\Server\obj\Debug\netcoreapp3.1\Server.MvcApplicationPartsAssemblyInfo.cache
+D:\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
