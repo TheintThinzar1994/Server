@@ -82,7 +82,7 @@ namespace Server.Controllers
             departData.Is_Active = true;
             departData.ts = DateTime.Now;
 
-            var department = _context.Departments.Where(e => e.Id != departData.Id && e.Name == departData.Name);
+            var department = _context.Departments.Where(e => e.Id != departData.Id && e.Name == departData.Name && e.Is_Active==true);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -184,7 +184,9 @@ namespace Server.Controllers
             deptData.Id = deptid;
             deptData.Name = name;
 
-            var department = _context.Departments.Where(e => e.Name == name);
+            var department = _context.Departments.Where(e => e.Name == name && e.Is_Active==true);
+            var subdepte = _context.SubDepartments.Where(e => e.Dept_Id == deptid && e.Is_Active == 1);
+            var empdata = _context.Employees.Where(e => e.Dept_Id == deptid && e.isActive == true);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 
@@ -201,23 +203,37 @@ namespace Server.Controllers
             }
             else
             {
-                Boolean delDept = _deptService.delDepartment(deptData);
-                if (delDept)
+                //The department already used in Subdepartment or Employee 15/09/2020 by SSM
+                if(subdepte.Count()>0 || empdata.Count() > 0)
                 {
-                    retdata.statuscode = "200";
-                    retdata.status = "Success";
+                    retdata.statuscode = "400";
+                    retdata.status = "Bad Request";
                     returnstatus.Add(retdata);
+                    result["status"] = returnstatus;
+                    result["department"] = returndata;
                 }
+
                 else
                 {
-                    retdata.statuscode = "304";
-                    retdata.status = "Fail";
-                    returnstatus.Add(retdata);
+                    Boolean delDept = _deptService.delDepartment(deptData);
+                    if (delDept)
+                    {
+                        retdata.statuscode = "200";
+                        retdata.status = "Success";
+                        returnstatus.Add(retdata);
+                    }
+                    else
+                    {
+                        retdata.statuscode = "304";
+                        retdata.status = "Fail";
+                        returnstatus.Add(retdata);
 
+                    }
+                    returndata.Add(department);
+                    result["status"] = returnstatus;
+                    result["role"] = returndata;
                 }
-                returndata.Add(department);
-                result["status"] = returnstatus;
-                result["role"] = returndata;
+                
                 
             }
             return JsonConvert.SerializeObject(result);
