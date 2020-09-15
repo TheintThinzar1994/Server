@@ -105,6 +105,7 @@ namespace Server.Controllers
 
             return thankCard;
         }
+        //Updated on 15/09/2020 By SSM to check login Employee in Reply data
         [HttpPut]
         [Route("UpdateView")]
         public string UpdateThankCardView(string paramList)
@@ -136,7 +137,7 @@ namespace Server.Controllers
                 {
                     ThankCard objcard = new ThankCard();
                     objcard = (ThankCard)thankcardlist[0];
-                    List<object> fromempdata = _thankcardservice.getEmployee("%", "%", objcard.From_Employee_Id.ToString());
+                    List<object> fromempdata = _thankcardservice.getEmployee("%", "%", objcard.From_Employee_Id.ToString(),objcard.To_Employee_Id.ToString());
                     empreturndata.Add(fromempdata);
                     result["fromEmpData"] = empreturndata;
                 }
@@ -193,7 +194,7 @@ namespace Server.Controllers
                 {
                     ThankCard objcard1 = new ThankCard();
                     objcard1 = (ThankCard)thankcardlist[0];
-                    List<object> fromempdata1 = _thankcardservice.getEmployee("%", "%", objcard1.From_Employee_Id.ToString());
+                    List<object> fromempdata1 = _thankcardservice.getEmployee("%", "%", objcard1.From_Employee_Id.ToString(),objcard1.To_Employee_Id.ToString());
                     emprdata.Add(fromempdata1);
                     result["fromEmpData"] = emprdata;
                 }
@@ -223,7 +224,8 @@ namespace Server.Controllers
         {
             //Accepting data from 
             var arr = JObject.Parse(paramList);
-            string emp_id = (string)arr["emp_id"];
+            string to_emp_id = (string)arr["emp_id"];
+            string from_emp_id = (string)arr["from_emp_id"];
             string dept_id = (string)arr["dept_id"];
             string sub_dept_id = (string)arr["sub_dept_id"]; 
 
@@ -235,7 +237,7 @@ namespace Server.Controllers
 
             //Getting Table Results from the Database
 
-            List<object> emplist = _thankcardservice.getEmployee(dept_id,sub_dept_id,emp_id);
+            List<object> emplist = _thankcardservice.getEmployee(dept_id,sub_dept_id,to_emp_id,from_emp_id);
 
             //Return Updated Result to Client with JSON format
             returndata.Add(emplist);
@@ -289,6 +291,7 @@ namespace Server.Controllers
         return JsonConvert.SerializeObject(result);
 
         }
+        //Update on 15/09/2020 By SSM to Check Dept, SubDept
         [HttpGet]
         [Route("GetGiveCard")]
         public string getGiveCardToView(string paramList)
@@ -317,6 +320,7 @@ namespace Server.Controllers
 
             return JsonConvert.SerializeObject(result);
         }
+        //Update by SSM on 15/09/2020 To Filter Results
         [HttpGet]
         [Route("GetGiveCardList")]
         public string getGiveCardListView(string paramList)
