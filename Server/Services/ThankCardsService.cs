@@ -15,7 +15,7 @@ namespace Server.Services
         List<ThankCard> updateThankCardView(int id, string status);
         List<object> updateThankCardReply(int id, string status, string reply);
 
-        List<object> getEmployee(string dept_id, string sub_dept_id, string emp_id);
+        List<object> getEmployee(string dept_id, string sub_dept_id, string to_emp_id,string from_emp_id);
         ThankCard CreateThankCards(ThankCard thakcard);
         List<object> getGiveThankView(int id);
         List<object> getGiveCardList(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date, string to_d_id, string to_s_id);
@@ -88,15 +88,15 @@ namespace Server.Services
             List<object> ret_thankcard = data1.ToList<object>();
             return ret_thankcard;
         }
-        public List<object> getEmployee(string dept_id, string sub_dept_id, string emp_id)
+        public List<object> getEmployee(string dept_id, string sub_dept_id, string to_emp_id,string from_emp_id)
         {
             List<object> emplist = new List<object>();
-            var data1 = from e in _context.Employees
+            var data1 = from e in _context.Employees.Where(e=>e.Id.ToString()!=from_emp_id)
                         join s in _context.SubDepartments on e.Sub_Dept_Id equals s.Id
                         join d in _context.Departments on e.Dept_Id equals d.Id
                         where EF.Functions.Like(s.Id.ToString(), sub_dept_id) && e.isActive == true
                         && s.Is_Active == 1 && d.Is_Active == true
-                        && EF.Functions.Like(d.Id.ToString(), dept_id) && EF.Functions.Like(e.Id.ToString(), emp_id)
+                        && EF.Functions.Like(d.Id.ToString(), dept_id) && EF.Functions.Like(e.Id.ToString(), to_emp_id)
                         select new
                         {
                             Emp_Id = e.Id,
@@ -111,14 +111,19 @@ namespace Server.Services
             emplist = data1.ToList<object>();
             return emplist;
         }
-
+        //Update by SSM to check Department and SubDepartment of each Employee on 15/09/2020
         public List<object> getGiveThankView(int id)
         {
             List<object> retdata = new List<object>();
             var data1 = from s in _context.ThankCards
                         join femp in _context.Employees on s.From_Employee_Id equals femp.Id
                         join temp in _context.Employees on s.To_Employee_Id equals temp.Id
+                        join fd in _context.Departments on femp.Dept_Id equals fd.Id
+                        join fs in _context.SubDepartments on femp.Sub_Dept_Id equals fs.Id
+                        join td in _context.Departments on temp.Dept_Id equals td.Id
+                        join ts in _context.SubDepartments on temp.Sub_Dept_Id equals ts.Id
                         where s.Id == id && s.isActive==true && femp.isActive==true && temp.isActive==true
+                        && fd.Is_Active==true && fs.Is_Active==1 && td.Is_Active==true && ts.Is_Active==1
                         select new
                         {
                             s.Id,s.From_Employee_Id,s.To_Employee_Id,From_Employee_Name=femp.User_Name,
@@ -129,6 +134,8 @@ namespace Server.Services
             retdata = data1.ToList<object>();
             return retdata;
         }
+
+        //update by ssm adding ToDepartment,ToSubDepartment Filters 14/09/2020
         public List<object> getGiveCardList(string from_emp_id,string to_emp_id, DateTime from_date, DateTime to_date,string to_d_id,string to_s_id)
         {
             List<object> retdata = new List<object>();
