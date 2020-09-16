@@ -241,16 +241,19 @@ namespace Server.Controllers
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
             List<object> returndata = new List<object>();
             List<object> returnstatus = new List<object>();
+            List<object> returnsubdept = new List<object>();
             ReturnData retdata = new ReturnData();
 
             //Checking Data Have or Not in SubDepartments Table
             if (subdepartment.Count() > 0)
             {
+                List<object> subdata1 = subdepartment.ToList<object>();
+                returndata.Add(subdata1);
                 if (employee.Count() > 0)
                 {
-                    // We Cannot delete subdepartment, There is already used in Employee table
+                    // We Cannot delete subdepartment, There is already used in Employee table                    
                     retdata.statuscode = "400";
-                    retdata.status = "Bad Request";
+                    retdata.status = "Sub Department Already Used in Employee Table!";
                     returnstatus.Add(retdata);
                     result["status"] = returnstatus;
                     result["subdepartment"] = returndata;
@@ -288,7 +291,7 @@ namespace Server.Controllers
                     else
                     {
                         retdata.statuscode = "304";
-                        retdata.status = "Not Modified";
+                        retdata.status = "There is no Data To Delete.";
                         returnstatus.Add(retdata);
                         result["status"] = returnstatus;
                         result["subdepartment"] = returndata;

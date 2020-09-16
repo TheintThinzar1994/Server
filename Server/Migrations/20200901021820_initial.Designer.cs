@@ -116,16 +116,13 @@ namespace Server.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Menu_Name")
-                        .HasColumnType("text");
-                    
+                        .HasColumnType("text"); 
+
                     b.Property<string>("RoutePath")
                         .HasColumnType("text");
 
                     b.Property<string>("Icon")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RoutePath")
-                        .HasColumnType("text");
+                        .HasColumnType("text"); 
 
                     b.Property<string>("Icon")
                         .HasColumnType("text");
@@ -169,8 +166,12 @@ namespace Server.Migrations
                     b.Property<bool>("isActive")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Action")
+                       .HasColumnType("text");
+
                     b.Property<DateTime>("ts")
                         .HasColumnType("timestamp without time zone");
+                     b.ToTable("MenuRole");
 
                     b.HasKey("Id");
 

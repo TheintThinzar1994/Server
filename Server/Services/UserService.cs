@@ -71,7 +71,8 @@ namespace Server.Services
             menurole => menurole.Role.Id,
             (user, menurole) => new
             {
-                MenuID = menurole.Menu_Id
+                MenuID = menurole.Menu_Id,
+                Menu_Role_Action = menurole.Action
             }
             ).Join(
                 _context.Menu,
@@ -86,7 +87,8 @@ namespace Server.Services
                     Des = menu.Description,
                     Action = menu.Action,
                     RoutePath = menu.RoutePath,
-                    Icon = menu.Icon
+                    Icon = menu.Icon,
+                    Menu_Role_Action = menurole.Menu_Role_Action
                 } 
                 ).ToList().OrderBy(Menu => Menu.MenuOrder).ToList();
          
@@ -147,6 +149,7 @@ namespace Server.Services
         {            
             var data = from s in _context.Roles
                         where EF.Functions.Like(s.Id.ToString(), roleid) && s.isActive==true
+                        orderby s.Id
                         select s;
             List<Role> roledata = data.ToList<Role>();
             return roledata;
