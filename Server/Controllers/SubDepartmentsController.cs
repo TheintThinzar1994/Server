@@ -250,7 +250,7 @@ namespace Server.Controllers
                 {
                     // We Cannot delete subdepartment, There is already used in Employee table
                     retdata.statuscode = "400";
-                    retdata.status = "Bad Request";
+                    retdata.status = "Sub Department Already Used in Employee Table!";
                     returnstatus.Add(retdata);
                     result["status"] = returnstatus;
                     result["subdepartment"] = returndata;
@@ -288,7 +288,7 @@ namespace Server.Controllers
                     else
                     {
                         retdata.statuscode = "304";
-                        retdata.status = "Not Modified";
+                        retdata.status = "There is no Data To Delete.";
                         returnstatus.Add(retdata);
                         result["status"] = returnstatus;
                         result["subdepartment"] = returndata;

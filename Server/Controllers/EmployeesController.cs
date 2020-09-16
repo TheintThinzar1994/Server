@@ -185,7 +185,8 @@ namespace Server.Controllers
                 {
                     // Checking Update User Name Already Have or Not
                     var user = from u in _context.Users
-                               where u.User_Name == user_name && u.isActive == true && u.Id != user_id
+                               where u.User_Name == user_name && u.isActive == true
+                               && u.Id != user_id
                                select u;
                     if (user.Count() > 0)
                     {
