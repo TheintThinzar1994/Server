@@ -116,7 +116,9 @@ namespace Server.Migrations
                     isActive = table.Column<bool>(nullable: false),
                     ts = table.Column<DateTime>(nullable: false),
                     Menu_Id = table.Column<long>(nullable: false),
-                    Role_Id = table.Column<long>(nullable: false)
+                    Role_Id = table.Column<long>(nullable: false),
+                    Action = table.Column<string>(nullable: false)
+
                 },
                 constraints: table =>
                 {
