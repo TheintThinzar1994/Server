@@ -26,5 +26,6 @@ namespace Server.Model
         public DateTime ts { get; set; }
         
         public int order { get; set; }
+        public String Menu_Name_JP { get; set; }
     }
 }
