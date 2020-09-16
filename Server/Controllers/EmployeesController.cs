@@ -280,8 +280,8 @@ namespace Server.Controllers
             // Checking Data Have or not in database to delete
             if (emp_var.Count() < 0)
             {
-                retdata.statuscode = "406";
-                retdata.status = "Do Data To Delete";
+                retdata.statuscode = "304";
+                retdata.status = "There is no Employee Data To Delete";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
                 result["employee"] = returndata;
@@ -371,7 +371,7 @@ namespace Server.Controllers
             if (dept_var.Count() > 0)
             {
                 retdata.statuscode = "406";
-                retdata.status = "Employee Name Already Have!!";
+                retdata.status = "The Insert Employee Name is Already Exist, Try Again";
                 returnstatus.Add(retdata);
                 result["status"] = returnstatus;
                 result["employee"] = returndata;
@@ -386,7 +386,7 @@ namespace Server.Controllers
                 if (data.Count() > 0)
                 {
                     retdata.statuscode = "406";
-                    retdata.status = "User Account Name Already Have..";
+                    retdata.status = "The Insert User Name is Already Exist, Try Again";
                     returnstatus.Add(retdata);
                     result["status"] = returnstatus;
                     result["employee"] = returndata;
@@ -437,7 +437,7 @@ namespace Server.Controllers
                         {
                             user.isActive = false;
                             User userre = _userservice.DeleteUser(user);
-                            retdata.statuscode = "406";
+                            retdata.statuscode = "304";
                             retdata.status = "Failed To Insert Employee Data, Please Try Again?";
                             returnstatus.Add(retdata);
                             result["status"] = returnstatus;
@@ -448,7 +448,7 @@ namespace Server.Controllers
                     }
                     else
                     {                        
-                        retdata.statuscode = "406";
+                        retdata.statuscode = "304";
                         retdata.status = "Failed To Insert User Data, Please Try Again?";
                         returnstatus.Add(retdata);
                         result["status"] = returnstatus;
