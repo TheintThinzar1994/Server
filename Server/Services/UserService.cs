@@ -149,6 +149,7 @@ namespace Server.Services
         {            
             var data = from s in _context.Roles
                         where EF.Functions.Like(s.Id.ToString(), roleid) && s.isActive==true
+                        orderby s.Id
                         select s;
             List<Role> roledata = data.ToList<Role>();
             return roledata;
