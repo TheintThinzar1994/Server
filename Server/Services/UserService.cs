@@ -71,7 +71,8 @@ namespace Server.Services
             menurole => menurole.Role.Id,
             (user, menurole) => new
             {
-                MenuID = menurole.Menu_Id
+                MenuID = menurole.Menu_Id,
+                Menu_Role_Action = menurole.Action
             }
             ).Join(
                 _context.Menu,
@@ -86,7 +87,8 @@ namespace Server.Services
                     Des = menu.Description,
                     Action = menu.Action,
                     RoutePath = menu.RoutePath,
-                    Icon = menu.Icon
+                    Icon = menu.Icon,
+                    Menu_Role_Action = menurole.Menu_Role_Action
                 } 
                 ).ToList().OrderBy(Menu => Menu.MenuOrder).ToList();
          
