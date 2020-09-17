@@ -368,7 +368,7 @@ namespace Server.Controllers
             string password = (string)arr["password"];
 
 
-            var user = _context.Users.Where(e => e.User_Name == name && e.Password == password);
+            var user = _context.Users.Where(e => e.User_Name == name && e.Password == password && e.isActive==true);
 
             IDictionary<string, List<object>> result = new Dictionary<string, List<object>>();
 

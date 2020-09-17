@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Team3ST\\Server\\Server.csproj": {}
+    "C:\\Users\\HP\\Desktop\\hotelproject\\project\\Server\\Server\\Server.csproj": {}
   },
   "projects": {
-    "D:\\Team3ST\\Server\\Server.csproj": {
+    "C:\\Users\\HP\\Desktop\\hotelproject\\project\\Server\\Server\\Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Team3ST\\Server\\Server.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Desktop\\hotelproject\\project\\Server\\Server\\Server.csproj",
         "projectName": "Server",
-        "projectPath": "D:\\Team3ST\\Server\\Server.csproj",
-        "packagesPath": "C:\\Users\\Hp\\.nuget\\packages\\",
-        "outputPath": "D:\\Team3ST\\Server\\obj\\",
+        "projectPath": "C:\\Users\\HP\\Desktop\\hotelproject\\project\\Server\\Server\\Server.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HP\\Desktop\\hotelproject\\project\\Server\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

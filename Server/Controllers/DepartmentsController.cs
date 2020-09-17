@@ -184,7 +184,7 @@ namespace Server.Controllers
             deptData.Id = deptid;
             deptData.Name = name;
 
-            var department = _context.Departments.Where(e => e.Name == name && e.Is_Active==true);
+            var department = _context.Departments.Where(e => e.Id == deptid && e.Is_Active==true);
             var subdepte = _context.SubDepartments.Where(e => e.Dept_Id == deptid && e.Is_Active == 1);
             var empdata = _context.Employees.Where(e => e.Dept_Id == deptid && e.isActive == true);
 
@@ -207,7 +207,7 @@ namespace Server.Controllers
                 if(subdepte.Count()>0 || empdata.Count() > 0)
                 {
                     retdata.statuscode = "400";
-                    retdata.status = "Bad Request";
+                    retdata.status = "The Department Already Used in Employee and SubDepartment.";
                     returnstatus.Add(retdata);
                     result["status"] = returnstatus;
                     result["department"] = returndata;

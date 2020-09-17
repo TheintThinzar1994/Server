@@ -24,6 +24,8 @@ namespace Server.Model
         public virtual Menu Menu { get; set; }
 
         public long Role_Id { get; set; }
+
+        public String Action { get; set; }
        
         [ForeignKey("Role_Id")]
         public virtual Role Role { get; set; }
