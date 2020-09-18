@@ -151,7 +151,7 @@ namespace Server.Services
                         femp.isActive==true && temp.isActive==true && d.Is_Active==true && sd.Is_Active==1 &&
                         EF.Functions.Like(d.Id.ToString(),to_d_id) && EF.Functions.Like(sd.Id.ToString(),to_s_id) &&
                         (tc.SendDate>=f_date && tc.SendDate<=t_date) && tc.From_Employee_Id.ToString()== from_emp_id && femp.isActive == true
-                        orderby tc.ts descending
+                        orderby tc.SendDate descending
                         select new
                         {
                             Emp_Name = temp.User_Name,
@@ -182,7 +182,7 @@ namespace Server.Services
             && EF.Functions.Like(d.Id.ToString(),f_dept_id) && 
             EF.Functions.Like(sd.Id.ToString(),f_s_dept_id) &&
             (tc.SendDate >= f_date  && tc.SendDate <= t_date)
-            orderby tc.ts descending
+            orderby tc.SendDate descending
                        select new
                        {
                            Emp_Name = fe.User_Name,
