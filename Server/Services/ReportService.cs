@@ -360,26 +360,26 @@ namespace Server.Services
                                 result.Emp_Name } into g
                             select new
                             {
-                                Dep_Name = g.Key.Dept_Name,
+                                Dept_Name = g.Key.Dept_Name,
                                 Dep_Id = g.Key.Dept_Id,
                                 Sub_Dept_Id = g.Key.Sub_Dept_Id,
                                 Sub_Dep_Name = g.Key.Sub_Dept_Name,
                                 From_Emp_Id = g.Key.From_Employee_Id,
                                 //To_Emp_Id = g.Key.To_Employee_Id,
-                                Em_Name = g.Key.Emp_Name,
+                                Emp_Name = g.Key.Emp_Name,
                                 CountResult = g.Count()
                             } into resultcount
                             orderby resultcount.CountResult descending
                             select new
                             {
-                                resultcount.Dep_Name,
+                                resultcount.Dept_Name,
                                 resultcount.Dep_Id,
                                 resultcount.Sub_Dep_Name,
                                 resultcount.Sub_Dept_Id,
                                 resultcount.From_Emp_Id,
                                 //resultcount.To_Emp_Id,
                                 resultcount.CountResult,
-                                resultcount.Em_Name,
+                                resultcount.Emp_Name,
                                 f_date,
                                 t_date
                             }
