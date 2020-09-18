@@ -405,7 +405,7 @@ namespace Server.Services
                             {
                                 Dept_Name = g.Key.Dept_Name,
                                 Sub_Dep_Name = g.Key.Sub_Dept_Name,
-                                Dep_Id = g.Key.Sub_Dept_Id,
+                                Dep_Id = g.Key.Dept_Id,
                                 Sub_Dept_Id = g.Key.Sub_Dept_Id,
                                 From_Emp_Id = g.Key.From_Emp_Id,
                                 //To_Emp_Id = g.Key.To_Emp_Id,
